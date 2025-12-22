@@ -1,0 +1,370 @@
+import { Product } from '../types';
+
+export const products: Product[] = [
+  {
+    id: 'bike-001',
+    name: 'Urban X1 Pro',
+    price: 3499000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=Urban+X1+Pro'],
+    inStock: true,
+    category: 'bicicleta',
+    tags: ['urbana', 'autonomía extendida', 'premium'],
+    description: 'Bicicleta eléctrica urbana de alto rendimiento con motor brushless de 500W y batería de litio de 48V 15Ah. Ideal para desplazamientos diarios con estilo y comodidad.',
+    badge: 'Nuevo',
+    popular: true,
+    specs: [
+      { label: 'Motor', value: '500W Brushless' },
+      { label: 'Batería', value: '48V 15Ah Litio' },
+      { label: 'Autonomía', value: 'Hasta 70 km' },
+      { label: 'Velocidad máx.', value: '32 km/h' },
+      { label: 'Peso', value: '24 kg' },
+      { label: 'Frenos', value: 'Disco hidráulico' },
+    ],
+    variants: [
+      { color: 'Negro Mate', available: true },
+      { color: 'Verde Oscuro', available: true },
+      { color: 'Gris Titanio', available: false },
+    ]
+  },
+  {
+    id: 'bike-002',
+    name: 'Mountain Beast 3000',
+    price: 5299000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=Mountain+Beast'],
+    inStock: true,
+    category: 'bicicleta',
+    tags: ['montaña', 'suspensión full', 'alto rendimiento'],
+    description: 'Bicicleta eléctrica de montaña con suspensión completa y motor de 750W. Diseñada para terrenos difíciles y aventuras extremas.',
+    popular: true,
+    specs: [
+      { label: 'Motor', value: '750W Mid-Drive' },
+      { label: 'Batería', value: '52V 20Ah' },
+      { label: 'Autonomía', value: 'Hasta 90 km' },
+      { label: 'Suspensión', value: 'Full 150mm' },
+      { label: 'Peso', value: '28 kg' },
+      { label: 'Neumáticos', value: '27.5" Todo terreno' },
+    ],
+    variants: [
+      { color: 'Negro/Rojo', available: true },
+      { color: 'Verde Militar', available: true },
+    ]
+  },
+  {
+    id: 'bike-003',
+    name: 'City Commuter',
+    price: 2799000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=City+Commuter'],
+    inStock: true,
+    category: 'bicicleta',
+    tags: ['urbana', 'económica', 'plegable'],
+    description: 'Bicicleta eléctrica compacta perfecta para la ciudad. Sistema plegable para fácil almacenamiento y transporte.',
+    badge: 'Oferta',
+    specs: [
+      { label: 'Motor', value: '350W Brushless' },
+      { label: 'Batería', value: '36V 10Ah' },
+      { label: 'Autonomía', value: 'Hasta 45 km' },
+      { label: 'Peso', value: '18 kg' },
+      { label: 'Plegable', value: 'Sí' },
+      { label: 'Tiempo de carga', value: '4-6 horas' },
+    ],
+    variants: [
+      { color: 'Blanco', available: true },
+      { color: 'Negro', available: true },
+    ]
+  },
+  {
+    id: 'bike-004',
+    name: 'Cargo Pro XL',
+    price: 6499000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=Cargo+Pro'],
+    inStock: true,
+    category: 'bicicleta',
+    tags: ['carga', 'familiar', 'comercial'],
+    description: 'Bicicleta de carga eléctrica con capacidad para 150kg. Ideal para entregas, compras o transporte familiar.',
+    specs: [
+      { label: 'Motor', value: '1000W Mid-Drive' },
+      { label: 'Batería', value: '48V 20Ah' },
+      { label: 'Capacidad carga', value: '150 kg' },
+      { label: 'Autonomía', value: 'Hasta 60 km' },
+      { label: 'Neumáticos', value: '20" Reforzados' },
+      { label: 'Peso', value: '38 kg' },
+    ]
+  },
+  {
+    id: 'bike-005',
+    name: 'Sport Racing Elite',
+    price: 4899000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=Sport+Elite'],
+    inStock: true,
+    category: 'bicicleta',
+    tags: ['deportiva', 'velocidad', 'carbono'],
+    description: 'Bicicleta eléctrica deportiva con cuadro de fibra de carbono. Para ciclistas que buscan velocidad y rendimiento.',
+    popular: true,
+    specs: [
+      { label: 'Motor', value: '600W High Torque' },
+      { label: 'Batería', value: '48V 14Ah' },
+      { label: 'Cuadro', value: 'Fibra de Carbono' },
+      { label: 'Velocidad máx.', value: '45 km/h' },
+      { label: 'Peso', value: '16 kg' },
+      { label: 'Frenos', value: 'Disco hidráulico' },
+    ],
+    variants: [
+      { color: 'Negro/Verde Neón', available: true },
+      { color: 'Blanco/Fucsia', available: true },
+    ]
+  },
+  {
+    id: 'bike-006',
+    name: 'Vintage Cruiser',
+    price: 3199000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=Vintage+Cruiser'],
+    inStock: false,
+    category: 'bicicleta',
+    tags: ['retro', 'confort', 'urbana'],
+    description: 'Diseño clásico con tecnología moderna. Estilo retro con todas las ventajas de la movilidad eléctrica.',
+    specs: [
+      { label: 'Motor', value: '250W Trasero' },
+      { label: 'Batería', value: '36V 12Ah' },
+      { label: 'Autonomía', value: 'Hasta 50 km' },
+      { label: 'Estilo', value: 'Vintage' },
+      { label: 'Peso', value: '22 kg' },
+      { label: 'Confort', value: 'Asiento premium' },
+    ]
+  },
+  {
+    id: 'scooter-001',
+    name: 'Thunder X Pro',
+    price: 2499000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=Thunder+X'],
+    inStock: true,
+    category: 'scooter',
+    tags: ['potente', 'autonomía', 'premium'],
+    description: 'Scooter eléctrico de alto rendimiento con motor dual y suspensión avanzada. Perfecto para recorridos largos.',
+    badge: 'Nuevo',
+    popular: true,
+    specs: [
+      { label: 'Motor', value: 'Dual 500W' },
+      { label: 'Batería', value: '48V 18Ah' },
+      { label: 'Autonomía', value: 'Hasta 65 km' },
+      { label: 'Velocidad máx.', value: '40 km/h' },
+      { label: 'Suspensión', value: 'Doble hidráulica' },
+      { label: 'Peso', value: '19 kg' },
+    ],
+    variants: [
+      { color: 'Negro', available: true },
+      { color: 'Gris', available: true },
+    ]
+  },
+  {
+    id: 'scooter-002',
+    name: 'Urban Lite',
+    price: 1599000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=Urban+Lite'],
+    inStock: true,
+    category: 'scooter',
+    tags: ['ligero', 'portátil', 'económico'],
+    description: 'Scooter compacto y ligero, ideal para la última milla. Fácil de transportar y almacenar.',
+    badge: 'Oferta',
+    specs: [
+      { label: 'Motor', value: '250W' },
+      { label: 'Batería', value: '36V 7.5Ah' },
+      { label: 'Autonomía', value: 'Hasta 25 km' },
+      { label: 'Peso', value: '11 kg' },
+      { label: 'Plegable', value: 'Sí' },
+      { label: 'Tiempo de carga', value: '3-4 horas' },
+    ]
+  },
+  {
+    id: 'scooter-003',
+    name: 'Speed Demon',
+    price: 3299000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=Speed+Demon'],
+    inStock: true,
+    category: 'scooter',
+    tags: ['velocidad', 'potencia', 'deportivo'],
+    description: 'El scooter más rápido de nuestra línea. Motor de 1000W para máxima velocidad y emoción.',
+    specs: [
+      { label: 'Motor', value: '1000W Peak' },
+      { label: 'Batería', value: '52V 20Ah' },
+      { label: 'Velocidad máx.', value: '55 km/h' },
+      { label: 'Autonomía', value: 'Hasta 70 km' },
+      { label: 'Neumáticos', value: '10" Todo terreno' },
+      { label: 'Peso', value: '24 kg' },
+    ]
+  },
+  {
+    id: 'scooter-004',
+    name: 'Family Cruiser',
+    price: 1999000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=Family+Cruiser'],
+    inStock: true,
+    category: 'scooter',
+    tags: ['confort', 'asiento', 'familiar'],
+    description: 'Scooter con asiento cómodo, perfecto para paseos relajados. Ideal para todas las edades.',
+    specs: [
+      { label: 'Motor', value: '350W' },
+      { label: 'Batería', value: '36V 12Ah' },
+      { label: 'Asiento', value: 'Acolchado premium' },
+      { label: 'Autonomía', value: 'Hasta 35 km' },
+      { label: 'Peso máx. usuario', value: '120 kg' },
+      { label: 'Peso', value: '16 kg' },
+    ]
+  },
+  {
+    id: 'scooter-005',
+    name: 'Off-Road Beast',
+    price: 2899000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=Off+Road'],
+    inStock: false,
+    category: 'scooter',
+    tags: ['todo terreno', 'aventura', 'resistente'],
+    description: 'Diseñado para terrenos difíciles. Neumáticos todo terreno y suspensión reforzada.',
+    specs: [
+      { label: 'Motor', value: '800W' },
+      { label: 'Batería', value: '48V 15Ah' },
+      { label: 'Neumáticos', value: '11" Off-road' },
+      { label: 'Suspensión', value: 'Doble resorte' },
+      { label: 'Certificación', value: 'IP54' },
+      { label: 'Peso', value: '22 kg' },
+    ]
+  },
+  {
+    id: 'scooter-006',
+    name: 'Mini Kids',
+    price: 899000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=Mini+Kids'],
+    inStock: true,
+    category: 'scooter',
+    tags: ['niños', 'seguridad', 'aprendizaje'],
+    description: 'Scooter eléctrico diseñado especialmente para niños. Velocidad limitada y controles de seguridad.',
+    specs: [
+      { label: 'Motor', value: '150W' },
+      { label: 'Batería', value: '24V 5Ah' },
+      { label: 'Velocidad máx.', value: '15 km/h' },
+      { label: 'Edad recomendada', value: '8-14 años' },
+      { label: 'Peso', value: '8 kg' },
+      { label: 'Autonomía', value: 'Hasta 12 km' },
+    ]
+  },
+  {
+    id: 'trike-001',
+    name: 'Cargo Trike Pro',
+    price: 5999000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=Cargo+Trike'],
+    inStock: true,
+    category: 'triciclo',
+    tags: ['carga', 'estabilidad', 'comercial'],
+    description: 'Triciclo de carga eléctrico con gran capacidad. Ideal para negocios de reparto y transporte.',
+    popular: true,
+    specs: [
+      { label: 'Motor', value: '750W Trasero' },
+      { label: 'Batería', value: '48V 20Ah' },
+      { label: 'Capacidad', value: '200 kg' },
+      { label: 'Caja de carga', value: '120L' },
+      { label: 'Autonomía', value: 'Hasta 50 km' },
+      { label: 'Frenos', value: 'Disco en 3 ruedas' },
+    ]
+  },
+  {
+    id: 'trike-002',
+    name: 'Comfort Senior',
+    price: 4299000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=Comfort+Senior'],
+    inStock: true,
+    category: 'triciclo',
+    tags: ['confort', 'senior', 'estabilidad'],
+    description: 'Triciclo eléctrico de máximo confort y estabilidad. Diseñado pensando en adultos mayores.',
+    badge: 'Nuevo',
+    specs: [
+      { label: 'Motor', value: '500W' },
+      { label: 'Batería', value: '48V 15Ah' },
+      { label: 'Asiento', value: 'Respaldo ajustable' },
+      { label: 'Estabilidad', value: '3 ruedas' },
+      { label: 'Cesta', value: 'Incluida' },
+      { label: 'Autonomía', value: 'Hasta 55 km' },
+    ]
+  },
+  {
+    id: 'trike-003',
+    name: 'Food Truck Bike',
+    price: 7499000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=Food+Truck'],
+    inStock: true,
+    category: 'triciclo',
+    tags: ['comercial', 'food truck', 'negocio'],
+    description: 'Triciclo especialmente diseñado para venta ambulante de comida. Incluye compartimento térmico.',
+    specs: [
+      { label: 'Motor', value: '1000W' },
+      { label: 'Batería', value: '48V 25Ah' },
+      { label: 'Compartimento', value: 'Térmico 200L' },
+      { label: 'Autonomía', value: 'Hasta 45 km' },
+      { label: 'Toldo', value: 'Incluido' },
+      { label: 'Peso', value: '65 kg' },
+    ]
+  },
+  {
+    id: 'trike-004',
+    name: 'Family Trike',
+    price: 4799000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=Family+Trike'],
+    inStock: true,
+    category: 'triciclo',
+    tags: ['familiar', 'paseo', 'dos plazas'],
+    description: 'Triciclo con capacidad para dos personas. Perfecto para paseos en familia o pareja.',
+    specs: [
+      { label: 'Motor', value: '750W' },
+      { label: 'Batería', value: '48V 18Ah' },
+      { label: 'Plazas', value: '2 personas' },
+      { label: 'Peso máx.', value: '180 kg' },
+      { label: 'Autonomía', value: 'Hasta 60 km' },
+      { label: 'Accesorios', value: 'Cesta trasera' },
+    ]
+  },
+  {
+    id: 'trike-005',
+    name: 'Sport Trike',
+    price: 5599000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=Sport+Trike'],
+    inStock: false,
+    category: 'triciclo',
+    tags: ['deportivo', 'aerodinámico', 'velocidad'],
+    description: 'Triciclo deportivo de diseño aerodinámico. Combina estabilidad con velocidad.',
+    specs: [
+      { label: 'Motor', value: '1000W Mid-Drive' },
+      { label: 'Batería', value: '52V 20Ah' },
+      { label: 'Velocidad máx.', value: '40 km/h' },
+      { label: 'Diseño', value: 'Aerodinámico' },
+      { label: 'Peso', value: '32 kg' },
+      { label: 'Autonomía', value: 'Hasta 75 km' },
+    ]
+  },
+  {
+    id: 'trike-006',
+    name: 'Delivery Express',
+    price: 6299000,
+    images: ['https://placehold.co/800x600/0B3D2E/39D98A?text=Delivery+Express'],
+    inStock: true,
+    category: 'triciclo',
+    tags: ['delivery', 'rápido', 'comercial'],
+    description: 'Optimizado para servicios de delivery. Caja térmica grande y motor potente para entregas rápidas.',
+    badge: 'Popular',
+    specs: [
+      { label: 'Motor', value: '1000W' },
+      { label: 'Batería', value: '52V 20Ah' },
+      { label: 'Caja térmica', value: '150L' },
+      { label: 'Velocidad', value: '35 km/h' },
+      { label: 'Autonomía', value: 'Hasta 65 km' },
+      { label: 'GPS', value: 'Integrado' },
+    ]
+  },
+];
+
+export const getProductById = (id: string): Product | undefined => {
+  return products.find(p => p.id === id);
+};
+
+export const getRelatedProducts = (product: Product, limit: number = 4): Product[] => {
+  return products
+    .filter(p => p.id !== product.id && p.category === product.category && p.inStock)
+    .slice(0, limit);
+};
