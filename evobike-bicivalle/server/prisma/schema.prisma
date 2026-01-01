@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id             String   @id @default(uuid())
+  name           String
+  price          Float
+  images         String[]
+  description    String   @db.Text
+  category       String
+  inventoryCount Int      @default(0)
+  tags           String[]
+  specs          Json
+  variants       Json?
+  badge          String?
+  popular        Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  orderItems     OrderItem[]
+  
+  @@index([category])
+  @@index([inventoryCount])
+}
+
+model Order {
+  id            String      @id @default(uuid())
+  orderNumber   String      @unique
+  status        OrderStatus @default(PENDING_PAYMENT)
+  
+  customerName  String
+  email         String
+  phone         String
+  city          String
+  address       String
+  notes         String?     @db.Text
+  
+  paymentMethod PaymentMethod
+  subtotal      Float
+  shipping      Float       @default(0)
+  tax           Float
+  total         Float
+  
+  items         OrderItem[]
+  notifications AdminNotification[]
+  
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  @@index([status])
+  @@index([createdAt])
+  @@index([email])
+}
+
+model OrderItem {
+  id              String  @id @default(uuid())
+  orderId         String
+  productId       String
+  nameSnapshot    String
+  priceSnapshot   Float
+  quantity        Int
+  selectedVariant String?
+  
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+  
+  @@index([orderId])
+  @@index([productId])
+}
+
+model AdminNotification {
+  id        String             @id @default(uuid())
+  type      NotificationType
+  message   String             @db.Text
+  isRead    Boolean            @default(false)
+  orderId   String?
+  
+  order     Order?             @relation(fields: [orderId], references: [id])
+  
+  createdAt DateTime           @default(now())
+  
+  @@index([isRead])
+  @@index([createdAt])
+}
+
+model AuditLog {
+  id        String      @id @default(uuid())
+  action    String
+  entity    String
+  entityId  String
+  changes   Json?
+  metadata  Json?
+  severity  LogSeverity @default(INFO)
+  message   String      @db.Text
+  createdAt DateTime    @default(now())
+  
+  @@index([action])
+  @@index([entity])
+  @@index([entityId])
+  @@index([createdAt])
+  @@index([severity])
+}
+
+enum OrderStatus {
+  PENDING_PAYMENT
+  PAID
+  READY_TO_SHIP
+  SHIPPED
+  CANCELED
+}
+
+enum PaymentMethod {
+  CARD
+  PSE
+  COD
+  PAYPAL
+}
+
+enum NotificationType {
+  ORDER_PAID
+  LOW_STOCK
+}
+
+enum LogSeverity {
+  INFO
+  WARNING
+  ERROR
+  CRITICAL
+}
