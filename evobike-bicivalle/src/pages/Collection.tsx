@@ -1,208 +1,190 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Filter } from 'lucide-react';
-import { products } from '../data/products';
-import { Filters, Product } from '../types';
 import ProductCard from '../components/product/ProductCard';
-import FiltersPanel from '../components/product/FiltersPanel';
+import { fetchProducts } from '../utils/api';
 
 const Collection: React.FC = () => {
   const { category } = useParams<{ category: string }>();
-  const [filters, setFilters] = useState<Filters>({});
-  const [showFilters, setShowFilters] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12;
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [priceRange, setPriceRange] = useState({ min: '', max: '' });
+  const [stockFilter, setStockFilter] = useState('all');
+  const [sortBy, setSortBy] = useState('featured');
 
-  // Filter and sort products
-  const filteredProducts = useMemo(() => {
-    let result = products;
+  useEffect(() => {
+    loadProducts();
+  }, [category, searchTerm, priceRange, stockFilter, sortBy]);
 
-    // Filter by category from URL
-    if (category) {
-      const categoryMap: Record<string, string> = {
-        bicicletas: 'bicicleta',
-        scooters: 'scooter',
-        triciclos: 'triciclo',
-      };
-      const categoryFilter = categoryMap[category];
-      if (categoryFilter) {
-        result = result.filter((p) => p.category === categoryFilter);
-      }
+  const loadProducts = async () => {
+    try {
+      setLoading(true);
+      const filters: any = { limit: '100' };
+      
+      if (category) filters.category = category;
+      if (searchTerm) filters.search = searchTerm;
+      if (priceRange.min) filters.minPrice = priceRange.min;
+      if (priceRange.max) filters.maxPrice = priceRange.max;
+      if (stockFilter === 'inStock') filters.inStock = 'true';
+      if (stockFilter === 'outOfStock') filters.inStock = 'false';
+      if (sortBy !== 'featured') filters.sortBy = sortBy;
+
+      const data = await fetchProducts(filters);
+      setProducts(data.products);
+    } catch (error) {
+      console.error('Error loading products:', error);
+    } finally {
+      setLoading(false);
     }
-
-    // Filter by stock
-    if (filters.inStock !== undefined) {
-      result = result.filter((p) => p.inStock === filters.inStock);
-    }
-
-    // Filter by price range
-    if (filters.minPrice !== undefined) {
-      result = result.filter((p) => p.price >= filters.minPrice!);
-    }
-    if (filters.maxPrice !== undefined) {
-      result = result.filter((p) => p.price <= filters.maxPrice!);
-    }
-
-    // Filter by search
-    if (filters.search) {
-      const searchLower = filters.search.toLowerCase();
-      result = result.filter(
-        (p) =>
-          p.name.toLowerCase().includes(searchLower) ||
-          p.tags.some((tag) => tag.toLowerCase().includes(searchLower))
-      );
-    }
-
-    // Sort
-    if (filters.sortBy) {
-      switch (filters.sortBy) {
-        case 'price-asc':
-          result = [...result].sort((a, b) => a.price - b.price);
-          break;
-        case 'price-desc':
-          result = [...result].sort((a, b) => b.price - a.price);
-          break;
-        case 'popular':
-          result = [...result].sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
-          break;
-        case 'newest':
-          result = [...result].sort((a, b) => (b.badge === 'Nuevo' ? 1 : 0) - (a.badge === 'Nuevo' ? 1 : 0));
-          break;
-      }
-    }
-
-    return result;
-  }, [category, filters]);
-
-  // Pagination
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-  const paginatedProducts = filteredProducts.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
-  const getCategoryTitle = () => {
-    const titles: Record<string, string> = {
-      bicicletas: 'Bicicletas Eléctricas',
-      scooters: 'Scooters Eléctricos',
-      triciclos: 'Triciclos Eléctricos',
-    };
-    return category ? titles[category] || 'Productos' : 'Todos los Productos';
   };
 
+  const categoryTitle = category
+    ? category.charAt(0).toUpperCase() + category.slice(1) + 's'
+    : 'Todos los Productos';
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-2xl text-gray-600">Cargando productos...</div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen py-8">
+    <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-heading font-bold text-text-primary mb-2">
-            {getCategoryTitle()}
-          </h1>
-          <p className="text-text-secondary">
-            {filteredProducts.length} producto{filteredProducts.length !== 1 ? 's' : ''} encontrado
-            {filteredProducts.length !== 1 ? 's' : ''}
-          </p>
+        <div className="mb-10">
+          <h1 className="text-5xl font-bold text-gray-900 mb-3">{categoryTitle}</h1>
+          <p className="text-xl text-gray-600">{products.length} productos encontrados</p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Filters - Desktop */}
-          <aside className="hidden lg:block w-64 flex-shrink-0">
-            <FiltersPanel filters={filters} onFilterChange={setFilters} />
-          </aside>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <aside className="lg:col-span-1">
+            <div className="bg-white rounded-xl p-6 shadow-sm border-2 border-gray-200 sticky top-24">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Filtros</h2>
 
-          {/* Main Content */}
-          <div className="flex-1">
-            {/* Mobile Filter Button */}
-            <div className="lg:hidden mb-6">
+              <div className="mb-8">
+                <label className="block text-sm font-semibold text-gray-900 mb-3">
+                  Buscar
+                </label>
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Nombre del producto"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-900 placeholder-gray-500"
+                />
+              </div>
+
+              <div className="mb-8">
+                <label className="block text-sm font-semibold text-gray-900 mb-3">
+                  Disponibilidad
+                </label>
+                <div className="space-y-3">
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="stock"
+                      value="all"
+                      checked={stockFilter === 'all'}
+                      onChange={(e) => setStockFilter(e.target.value)}
+                      className="w-5 h-5 text-green-600 focus:ring-green-500"
+                    />
+                    <span className="text-gray-900 font-medium">Todos</span>
+                  </label>
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="stock"
+                      value="inStock"
+                      checked={stockFilter === 'inStock'}
+                      onChange={(e) => setStockFilter(e.target.value)}
+                      className="w-5 h-5 text-green-600 focus:ring-green-500"
+                    />
+                    <span className="text-gray-900 font-medium">En stock</span>
+                  </label>
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="stock"
+                      value="outOfStock"
+                      checked={stockFilter === 'outOfStock'}
+                      onChange={(e) => setStockFilter(e.target.value)}
+                      className="w-5 h-5 text-green-600 focus:ring-green-500"
+                    />
+                    <span className="text-gray-900 font-medium">Agotado</span>
+                  </label>
+                </div>
+              </div>
+
+              <div className="mb-8">
+                <label className="block text-sm font-semibold text-gray-900 mb-3">
+                  Rango de precio
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  <input
+                    type="number"
+                    placeholder="Mín"
+                    value={priceRange.min}
+                    onChange={(e) => setPriceRange({ ...priceRange, min: e.target.value })}
+                    className="px-3 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-900 placeholder-gray-500"
+                  />
+                  <input
+                    type="number"
+                    placeholder="Máx"
+                    value={priceRange.max}
+                    onChange={(e) => setPriceRange({ ...priceRange, max: e.target.value })}
+                    className="px-3 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-900 placeholder-gray-500"
+                  />
+                </div>
+              </div>
+
+              <div className="mb-8">
+                <label className="block text-sm font-semibold text-gray-900 mb-3">
+                  Ordenar por
+                </label>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-900 bg-white font-medium"
+                >
+                  <option value="featured">Destacados</option>
+                  <option value="price-asc">Precio: Menor a Mayor</option>
+                  <option value="price-desc">Precio: Mayor a Menor</option>
+                  <option value="name">Nombre A-Z</option>
+                </select>
+              </div>
+
               <button
-                onClick={() => setShowFilters(true)}
-                className="flex items-center space-x-2 bg-primary-surface text-text-primary px-4 py-2 rounded-lg hover:bg-primary-green-dark transition-colors duration-200"
+                onClick={() => {
+                  setSearchTerm('');
+                  setPriceRange({ min: '', max: '' });
+                  setStockFilter('all');
+                  setSortBy('featured');
+                }}
+                className="w-full py-3 bg-gray-900 text-white rounded-lg font-bold hover:bg-gray-800 transition-colors text-lg"
               >
-                <Filter className="w-5 h-5" />
-                <span>Filtros</span>
+                Limpiar filtros
               </button>
             </div>
+          </aside>
 
-            {/* Products Grid */}
-            {paginatedProducts.length > 0 ? (
-              <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {paginatedProducts.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                  ))}
-                </div>
+          <div className="lg:col-span-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              {products.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
 
-                {/* Pagination */}
-                {totalPages > 1 && (
-                  <div className="mt-12 flex justify-center items-center space-x-2">
-                    <button
-                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                      disabled={currentPage === 1}
-                      className="px-4 py-2 bg-primary-surface text-text-primary rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary-green-dark transition-colors duration-200"
-                    >
-                      Anterior
-                    </button>
-                    
-                    <div className="flex space-x-2">
-                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                        <button
-                          key={page}
-                          onClick={() => setCurrentPage(page)}
-                          className={`w-10 h-10 rounded-lg transition-colors duration-200 ${
-                            currentPage === page
-                              ? 'bg-accent-fuchsia text-white'
-                              : 'bg-primary-surface text-text-primary hover:bg-primary-green-dark'
-                          }`}
-                        >
-                          {page}
-                        </button>
-                      ))}
-                    </div>
-
-                    <button
-                      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                      disabled={currentPage === totalPages}
-                      className="px-4 py-2 bg-primary-surface text-text-primary rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary-green-dark transition-colors duration-200"
-                    >
-                      Siguiente
-                    </button>
-                  </div>
-                )}
-              </>
-            ) : (
-              <div className="text-center py-20">
-                <p className="text-text-secondary text-lg">
-                  No se encontraron productos con los filtros seleccionados.
-                </p>
-                <button
-                  onClick={() => setFilters({})}
-                  className="mt-4 text-accent-fuchsia hover:text-accent-fuchsia-hover font-medium"
-                >
-                  Limpiar filtros
-                </button>
+            {products.length === 0 && (
+              <div className="text-center py-16 bg-white rounded-xl border-2 border-gray-200">
+                <p className="text-2xl font-bold text-gray-900 mb-2">No se encontraron productos</p>
+                <p className="text-gray-600">Intenta con otros filtros</p>
               </div>
             )}
           </div>
         </div>
       </div>
-
-      {/* Mobile Filters Drawer */}
-      {showFilters && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          <div
-            className="absolute inset-0 bg-black bg-opacity-75"
-            onClick={() => setShowFilters(false)}
-          ></div>
-          <div className="absolute inset-y-0 right-0 w-full max-w-sm bg-primary-bg p-6 overflow-y-auto">
-            <FiltersPanel
-              filters={filters}
-              onFilterChange={setFilters}
-              onClose={() => setShowFilters(false)}
-              isMobile
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 };

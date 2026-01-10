@@ -7,6 +7,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password      String
+  name          String
+  role          UserRole @default(VENDOR)
+  isActive      Boolean  @default(true)
+  
+  canManageInventory Boolean @default(false)
+  canManageOrders    Boolean @default(false)
+  canManageUsers     Boolean @default(false)
+  canViewReports     Boolean @default(false)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  ordersCreated Order[]  @relation("CreatedBy")
+  auditLogs     AuditLog[]
+  
+  @@index([email])
+  @@index([role])
+}
+
 model Product {
   id             String   @id @default(uuid())
   name           String
@@ -18,6 +41,8 @@ model Product {
   tags           String[]
   specs          Json
   variants       Json?
+  batteryType    String?
+  batteryOptions Json?
   badge          String?
   popular        Boolean  @default(false)
   createdAt      DateTime @default(now())
@@ -27,6 +52,7 @@ model Product {
   
   @@index([category])
   @@index([inventoryCount])
+  @@index([name])
 }
 
 model Order {
@@ -42,13 +68,23 @@ model Order {
   notes         String?     @db.Text
   
   paymentMethod PaymentMethod
+  paymentType   PaymentType   @default(FULL_PAYMENT)
+  downPayment   Float?
+  remainingBalance Float?
+  isPaid        Boolean       @default(false)
+  
   subtotal      Float
   shipping      Float       @default(0)
   tax           Float
   total         Float
   
+  saleType      SaleType    @default(ONLINE)
+  createdById   String?
+  createdBy     User?       @relation("CreatedBy", fields: [createdById], references: [id])
+  
   items         OrderItem[]
   notifications AdminNotification[]
+  payments      Payment[]
   
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
@@ -56,6 +92,8 @@ model Order {
   @@index([status])
   @@index([createdAt])
   @@index([email])
+  @@index([createdById])
+  @@index([saleType])
 }
 
 model OrderItem {
@@ -72,6 +110,20 @@ model OrderItem {
   
   @@index([orderId])
   @@index([productId])
+}
+
+model Payment {
+  id          String        @id @default(uuid())
+  orderId     String
+  amount      Float
+  paymentType PaymentMethod
+  reference   String?
+  notes       String?       @db.Text
+  createdAt   DateTime      @default(now())
+  
+  order       Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  
+  @@index([orderId])
 }
 
 model AdminNotification {
@@ -98,6 +150,8 @@ model AuditLog {
   metadata  Json?
   severity  LogSeverity @default(INFO)
   message   String      @db.Text
+  userId    String?
+  user      User?       @relation(fields: [userId], references: [id])
   createdAt DateTime    @default(now())
   
   @@index([action])
@@ -105,14 +159,23 @@ model AuditLog {
   @@index([entityId])
   @@index([createdAt])
   @@index([severity])
+  @@index([userId])
+}
+
+enum UserRole {
+  ADMIN
+  VENDOR
+  MANAGER
 }
 
 enum OrderStatus {
   PENDING_PAYMENT
+  PARTIAL_PAYMENT
   PAID
   READY_TO_SHIP
   SHIPPED
   CANCELED
+  REFUNDED
 }
 
 enum PaymentMethod {
@@ -120,11 +183,26 @@ enum PaymentMethod {
   PSE
   COD
   PAYPAL
+  CASH
+  TRANSFER
+}
+
+enum PaymentType {
+  FULL_PAYMENT
+  DOWN_PAYMENT
+  INSTALLMENT
+}
+
+enum SaleType {
+  ONLINE
+  IN_PERSON
 }
 
 enum NotificationType {
   ORDER_PAID
   LOW_STOCK
+  NEW_USER
+  REFUND_REQUESTED
 }
 
 enum LogSeverity {
