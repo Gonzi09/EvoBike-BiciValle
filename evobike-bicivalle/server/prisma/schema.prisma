@@ -33,6 +33,7 @@ model User {
 model Product {
   id             String   @id @default(uuid())
   name           String
+  siigoCode      String?  @unique
   price          Float
   images         String[]
   description    String   @db.Text
@@ -53,6 +54,7 @@ model Product {
   @@index([category])
   @@index([inventoryCount])
   @@index([name])
+  @@index([siigoCode])
 }
 
 model Order {

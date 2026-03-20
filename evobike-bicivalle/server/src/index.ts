@@ -8,6 +8,7 @@ import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
 import vendorRoutes from './routes/vendor.js';
 import testRoutes from './routes/test.js';
+import siigoRoutes from './routes/siigo.js';
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/vendor', vendorRoutes);
 app.use('/api/test', testRoutes);
+app.use('/api/siigo', siigoRoutes);
 
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.error('Error:', err);
