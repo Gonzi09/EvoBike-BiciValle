@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "start": "tsx src/index.js",
+    "start": "npx tsx src/index.js",
     "migrate": "prisma migrate dev",
     "seed": "tsx prisma/seed.ts",
     "studio": "prisma studio"

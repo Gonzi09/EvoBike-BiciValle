@@ -19,10 +19,10 @@ import vendorRoutes from './routes/vendor.js';
 import testRoutes from './routes/test.js';
 import siigoRoutes from './routes/siigo.js';
 import checkoutRoutes from './routes/checkout.js';
-import webhookRoutes from './routes/webhooks.js';
 
+import webhookRoutes from './routes/webhooks.js';
 if (!process.env.WOMPI_PUBLIC_KEY || !process.env.WOMPI_INTEGRITY_SECRET) {
-  throw new Error('Missing WOMPI_PUBLIC_KEY or WOMPI_INTEGRITY_SECRET');
+  console.warn('Missing Wompi env vars');
 }
 
 const app = express();
