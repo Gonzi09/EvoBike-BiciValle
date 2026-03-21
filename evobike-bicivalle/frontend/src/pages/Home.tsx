@@ -616,22 +616,64 @@ const Home: React.FC = () => {
       ══════════════════════════════════════════════════════ */}
       <section className="bg-[#111827] py-24 border-b border-[#1e2d42]">
         <div className="max-w-7xl mx-auto px-6 lg:px-16">
-          <div className="text-center mb-16">
-            <span className="text-[#2E9ED4] text-[11px] font-bold uppercase tracking-[0.4em] block mb-4">Por qué elegirnos</span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F9FAFB] tracking-tight">Movilidad que importa</h2>
+          <div className="text-center mb-12">
+            <span className="text-[#2E9ED4] text-[11px] font-bold uppercase tracking-[0.4em] block mb-4">Visítanos</span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F9FAFB] tracking-tight">Movilidad Libre</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#0B1220] rounded-2xl overflow-hidden">
-            {[
-              { num: '01', title: 'Potencia real', body: 'Motores de última generación diseñados para el uso urbano diario con máximo rendimiento.' },
-              { num: '02', title: 'Sin preocupaciones', body: '1 año de garantía completa y soporte técnico especializado en cada producto.' },
-              { num: '03', title: 'Entrega nacional', body: 'Enviamos a cualquier ciudad del país sin costo adicional, con seguimiento en tiempo real.' },
-            ].map(({ num, title, body }) => (
-              <div key={num} className="bg-[#0B1220] glass-sm px-10 py-12">
-                <span className="text-[#2E9ED4] text-[11px] font-bold uppercase tracking-[0.4em] block mb-5">{num}</span>
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#F9FAFB] mb-4">{title}</h3>
-                <p className="text-[#9CA3AF] text-base sm:text-lg leading-relaxed font-medium">{body}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-7 md:gap-8 items-stretch">
+            <div className="bg-[#0B1220] border border-[#1e2d42] rounded-2xl px-7 py-7">
+              <p className="text-[#2E9ED4] text-xs uppercase tracking-[0.22em] font-semibold mb-2.5">Tienda de bicicletas eléctricas en Cali, Colombia</p>
+              <p className="text-[#9CA3AF] text-base sm:text-lg leading-relaxed mb-6">
+                Visítanos y conoce nuestras opciones de movilidad en persona. Estamos listos para ayudarte a encontrar el modelo ideal.
+              </p>
+
+              <div className="space-y-3 mb-6">
+                <div className="flex items-start justify-between gap-5 pb-2.5 border-b border-[#1e2d42]">
+                  <span className="text-[#6B7280] text-sm uppercase tracking-[0.16em]">Dirección</span>
+                  <span className="text-[#F9FAFB] text-sm sm:text-base font-medium text-right">Av. Roosevelt #25-68 local 104, 3 de Julio, Valle del Cauca</span>
+                </div>
+                <div className="flex items-start justify-between gap-5 pb-2.5 border-b border-[#1e2d42]">
+                  <span className="text-[#6B7280] text-sm uppercase tracking-[0.16em]">Ciudad</span>
+                  <span className="text-[#F9FAFB] text-sm sm:text-base font-medium text-right">Cali, Colombia</span>
+                </div>
+                <div className="flex items-start justify-between gap-5 pb-2.5 border-b border-[#1e2d42]">
+                  <span className="text-[#6B7280] text-sm uppercase tracking-[0.16em]">Horario</span>
+                  <span className="text-[#F9FAFB] text-sm sm:text-base font-medium text-right">Abierto · Cierra a las 6 p.m.</span>
+                </div>
+                <div className="flex items-start justify-between gap-5 pb-1">
+                  <span className="text-[#6B7280] text-sm uppercase tracking-[0.16em]">Teléfono</span>
+                  <span className="text-[#F9FAFB] text-sm sm:text-base font-medium text-right">+57 318 4128902</span>
+                </div>
               </div>
-            ))}
+
+              <a
+                href="https://maps.google.com/?q=Movilidad+Libre,+Av.+Roosevelt+%2325-68+local+104,+3+de+Julio,+Cali,+Valle+del+Cauca,+Colombia"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#2E9ED4] text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-[#1e7fab] hover:shadow-md transition-all duration-200"
+              >
+                Abrir en Google Maps <ChevronRight className="w-4 h-4" />
+              </a>
+            </div>
+
+            <a
+                href="https://www.google.com/maps/place/Movilidad+Libre/@3.4339588,-76.5397332,18z/data=!4m6!3m5!1s0x8e30a71c5292bbe9:0x921144b53be8b4fe!8m2!3d3.4346753!4d-76.5389735!16s%2Fg%2F11n9gpyjky?entry=ttu&g_ep=EgoyMDI2MDMxOC4xIKXMDSoASAFQAw%3D%3D"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative block rounded-2xl overflow-hidden border border-[#1e2d42] shadow-sm bg-[#0B1220] h-[360px] md:h-[380px]"
+              aria-label="Abrir ubicación en Google Maps"
+            >
+              <span className="absolute top-3 left-3 z-10 inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#0B1220]/75 text-[#F9FAFB] text-xs font-semibold tracking-wide border border-[#1e2d42]">
+                Ver en Google Maps
+              </span>
+              <iframe
+                title="Ubicación EvoBike"
+                src="https://www.google.com/maps?cid=10525269349326435582&hl=es&z=19&output=embed"
+                className="w-full h-full pointer-events-none"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </a>
           </div>
         </div>
       </section>
