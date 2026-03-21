@@ -19,8 +19,8 @@ import vendorRoutes from './routes/vendor.js';
 import testRoutes from './routes/test.js';
 import siigoRoutes from './routes/siigo.js';
 import checkoutRoutes from './routes/checkout.js';
-
 import webhookRoutes from './routes/webhooks.js';
+
 if (!process.env.WOMPI_PUBLIC_KEY || !process.env.WOMPI_INTEGRITY_SECRET) {
   console.warn('Missing Wompi env vars');
 }
@@ -28,9 +28,10 @@ if (!process.env.WOMPI_PUBLIC_KEY || !process.env.WOMPI_INTEGRITY_SECRET) {
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  credentials: true,
+}));
 
 app.use(express.json());
 
@@ -45,6 +46,10 @@ app.use('/api/siigo', siigoRoutes);
 app.use('/api/checkout', checkoutRoutes);
 app.use('/api/webhooks', webhookRoutes);
 
+app.get('/', (req, res) => {
+  res.send('API running');
+});
+
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
