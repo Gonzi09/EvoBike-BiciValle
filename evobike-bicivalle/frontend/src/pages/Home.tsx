@@ -212,7 +212,7 @@ const Home: React.FC = () => {
                   <div
                     key={i}
                     style={{
-                      fontSize: 'clamp(1.75rem, 5vw, 4.25rem)',
+                      fontSize: 'clamp(2rem, 4.5vw, 3.5rem)',
                       fontWeight: 800,
                       color,
                       letterSpacing: '-0.03em',
@@ -225,7 +225,7 @@ const Home: React.FC = () => {
               </div>
 
               {/* Description */}
-              <p style={{ color: '#9CA3AF', fontSize: 'clamp(13px, 2.5vw, 13px)', lineHeight: 1.6, marginBottom: '16px' }} className="text-center lg:text-left">
+              <p style={{ color: '#9CA3AF', fontSize: 'clamp(13px, 2.2vw, 15px)', lineHeight: 1.6, marginBottom: '16px' }} className="text-center lg:text-left">
                 Movilidad urbana sin límites. Compacto, veloz y sin emisiones para la ciudad moderna.
               </p>
 
@@ -243,7 +243,7 @@ const Home: React.FC = () => {
                 />
                 <Link
                   to="/scooters"
-                  className="relative inline-flex items-center justify-center gap-2.5 text-white text-[12px] sm:text-[13px] font-bold px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl"
+                  className="relative inline-flex items-center justify-center gap-2.5 text-white text-[13px] sm:text-[14px] font-bold px-7 sm:px-8 py-3 sm:py-3.5 rounded-xl"
                   style={{
                     background: 'linear-gradient(135deg, #2E9ED4, #1e7fab)',
                     boxShadow: '0 1px 0 rgba(255,255,255,0.08) inset, 0 0 16px rgba(0,191,255,0.18)',
@@ -643,34 +643,34 @@ const Home: React.FC = () => {
       {/* ══════════════════════════════════════════════════════
           2. FEATURED CATEGORY
       ══════════════════════════════════════════════════════ */}
-      <section className="bg-[#0B1220] py-24 border-b border-[#1e2d42]">
+      <section className="bg-[#F7F9FC] py-24 border-b border-[#E2E8F0]">
         <div className="max-w-7xl mx-auto px-6 lg:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-            <div className="overflow-hidden rounded-2xl bg-[#111827] aspect-[4/3]">
+            <div className="overflow-hidden rounded-2xl bg-[#E2E8F0] aspect-[4/3]">
               <img src={slides[0].image} alt={slides[0].eyebrow} className="w-full h-full object-cover" />
             </div>
 
             <div className="lg:pl-8">
               <span className="text-[#2E9ED4] text-[11px] font-bold uppercase tracking-[0.4em] block mb-4">Más Vendido</span>
-              <h2 className="text-4xl font-bold text-[#F9FAFB] tracking-tight mb-4">Bicicletas<br />Eléctricas</h2>
-              <p className="text-[#9CA3AF] text-[15px] leading-relaxed mb-8 max-w-sm">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0B1220] tracking-tight mb-6">Bicicletas<br />Eléctricas</h2>
+              <p className="text-[#6B7280] text-lg sm:text-xl leading-relaxed mb-8 max-w-sm font-medium">
                 Diseñadas para la ciudad. Silenciosas, eficientes y con estilo que convierte cada trayecto en una experiencia.
               </p>
-              <div className="space-y-3 mb-8">
+              <div className="space-y-4 mb-8">
                 {[{ label: 'Motor', value: 'Alta eficiencia' }, { label: 'Batería', value: 'Larga duración' }, { label: 'Garantía', value: '1 año completo' }].map(({ label, value }) => (
-                  <div key={label} className="flex items-center justify-between py-3 border-b border-[#1e2d42]">
-                    <span className="text-[#9CA3AF] text-sm">{label}</span>
-                    <span className="text-[#F9FAFB] text-sm font-semibold">{value}</span>
+                  <div key={label} className="flex items-center justify-between py-3 border-b border-[#E2E8F0]">
+                    <span className="text-[#6B7280] text-base font-medium">{label}</span>
+                    <span className="text-[#0B1220] text-base font-bold">{value}</span>
                   </div>
                 ))}
               </div>
               <div className="flex items-center gap-5">
                 <div>
-                  <p className="text-[#9CA3AF] text-xs mb-0.5">Desde</p>
-                  <p className="text-2xl font-bold text-[#111827]">$2.100.000</p>
+                  <p className="text-[#6B7280] text-sm mb-1">Desde</p>
+                  <p className="text-4xl font-bold text-[#0B1220]">$2.100.000</p>
                 </div>
-                <Link to="/bicicletas" className="inline-flex items-center gap-2 bg-[#2E9ED4] text-white px-7 py-3.5 rounded-xl text-sm font-semibold hover:bg-[#00BFFF] transition-colors duration-200">
+                <Link to="/bicicletas" className="inline-flex items-center gap-2 bg-[#2E9ED4] text-white px-8 py-3.5 rounded-xl text-base font-semibold hover:bg-[#00BFFF] transition-colors duration-200">
                   Ver modelos <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
@@ -688,7 +688,7 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-6 lg:px-16">
           <div className="text-center mb-16">
             <span className="text-[#2E9ED4] text-[11px] font-bold uppercase tracking-[0.4em] block mb-4">Por qué elegirnos</span>
-            <h2 className="text-4xl font-bold text-[#F9FAFB] tracking-tight">Movilidad que importa</h2>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F9FAFB] tracking-tight">Movilidad que importa</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#0B1220] rounded-2xl overflow-hidden">
             {[
@@ -698,8 +698,8 @@ const Home: React.FC = () => {
             ].map(({ num, title, body }) => (
               <div key={num} className="bg-[#0B1220] glass-sm px-10 py-12">
                 <span className="text-[#2E9ED4] text-[11px] font-bold uppercase tracking-[0.4em] block mb-5">{num}</span>
-                <h3 className="text-lg font-bold text-[#F9FAFB] mb-3">{title}</h3>
-                <p className="text-[#9CA3AF] text-sm leading-relaxed">{body}</p>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#F9FAFB] mb-4">{title}</h3>
+                <p className="text-[#9CA3AF] text-base sm:text-lg leading-relaxed font-medium">{body}</p>
               </div>
             ))}
           </div>
@@ -710,15 +710,15 @@ const Home: React.FC = () => {
       {/* ══════════════════════════════════════════════════════
           4. PRODUCT GRID
       ══════════════════════════════════════════════════════ */}
-      <section className="bg-[#0B1220] py-24 border-b border-[#1e2d42]">
+      <section className="bg-[#F7F9FC] py-24 border-b border-[#E2E8F0]">
         <div className="max-w-7xl mx-auto px-6 lg:px-16">
 
           <div className="flex items-end justify-between mb-12">
             <div>
               <span className="text-[#2E9ED4] text-[11px] font-bold uppercase tracking-[0.4em] block mb-3">Colección</span>
-              <h2 className="text-4xl font-bold text-[#F9FAFB] tracking-tight">Productos Destacados</h2>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0B1220] tracking-tight">Productos Destacados</h2>
             </div>
-            <Link to="/bicicletas" className="text-sm text-[#9CA3AF] hover:text-[#2E9ED4] transition-colors flex items-center gap-1 group">
+            <Link to="/bicicletas" className="text-base text-[#6B7280] hover:text-[#2E9ED4] transition-colors flex items-center gap-1 group font-medium">
               Ver todo <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
@@ -726,7 +726,7 @@ const Home: React.FC = () => {
           {loading ? (
             <div className="flex items-center justify-center py-24 gap-3">
               <div className="w-6 h-6 border-2 border-[#2E9ED4] border-t-transparent rounded-full animate-spin" />
-              <span className="text-[#9CA3AF] text-sm">Cargando...</span>
+              <span className="text-[#6B7280] text-base font-medium">Cargando...</span>
             </div>
           ) : popularProducts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -739,13 +739,13 @@ const Home: React.FC = () => {
                 { img: '/imgs/Patineta-Evobike.webp', title: 'Scooters Eléctricos',  price: 'Desde $1,599,000', link: '/scooters'   },
                 { img: '/imgs/Triciclos.webp',         title: 'Triciclos Eléctricos', price: 'Desde $4,299,000', link: '/triciclos'  },
               ].map(cat => (
-                <Link key={cat.link} to={cat.link} className="group block bg-[#111827] glass rounded-2xl overflow-hidden border border-[#1e2d42] hover:shadow-glow transition-all duration-300">
-                  <div className="h-56 overflow-hidden bg-[#0B1220]">
+                <Link key={cat.link} to={cat.link} className="group block bg-white rounded-2xl overflow-hidden border border-[#E2E8F0] hover:shadow-lg transition-all duration-300">
+                  <div className="h-56 overflow-hidden bg-[#F0F4F8]">
                     <img src={cat.img} alt={cat.title} className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500" />
                   </div>
-                  <div className="px-6 py-5 border-t border-[#1e2d42]">
-                    <h3 className="font-bold text-[#F9FAFB] mb-1 text-[15px]">{cat.title}</h3>
-                    <p className="text-[#9CA3AF] text-sm">{cat.price}</p>
+                  <div className="px-6 py-5 border-t border-[#E2E8F0]">
+                    <h3 className="font-bold text-[#0B1220] mb-2 text-lg">{cat.title}</h3>
+                    <p className="text-[#6B7280] text-base font-medium">{cat.price}</p>
                   </div>
                 </Link>
               ))}
@@ -761,13 +761,13 @@ const Home: React.FC = () => {
       <section className="bg-[#0B1220] py-36 border-t border-[#1e2d42]">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <span className="text-[#2E9ED4] text-[11px] font-bold uppercase tracking-[0.5em] block mb-8">Movilidad Libre</span>
-          <h2 className="text-5xl md:text-[3.75rem] font-bold text-[#F9FAFB] leading-[1.05] tracking-tight mb-5">
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[#F9FAFB] leading-[1.05] tracking-tight mb-6">
             El futuro se mueve<br />en silencio.
           </h2>
-          <p className="text-[#9CA3AF] text-[15px] leading-relaxed mb-10 max-w-sm mx-auto">
+          <p className="text-[#9CA3AF] text-lg sm:text-xl leading-relaxed mb-10 max-w-xl mx-auto font-medium">
             Descubre la colección completa de vehículos eléctricos.
           </p>
-          <Link to="/bicicletas" className="inline-flex items-center gap-2.5 bg-gradient-to-r from-[#2E9ED4] to-[#1e7fab] text-white px-9 py-4 rounded-xl font-semibold text-sm hover:from-[#00BFFF] hover:to-[#2E9ED4] transition-all duration-300 shadow-glow hover:shadow-glow">
+          <Link to="/bicicletas" className="inline-flex items-center gap-2.5 bg-gradient-to-r from-[#2E9ED4] to-[#1e7fab] text-white px-10 py-4 rounded-xl font-semibold text-base hover:from-[#00BFFF] hover:to-[#2E9ED4] transition-all duration-300 shadow-glow hover:shadow-glow">
             Explorar la colección <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
