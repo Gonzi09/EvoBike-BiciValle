@@ -6,7 +6,7 @@ import { fetchProductById } from '../utils/api';
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { addToCart } = useCart();
+  const { addItem } = useCart();
   const [product, setProduct] = useState<any>(null);
   const [selectedVariant, setSelectedVariant] = useState<any>(null);
   const [selectedBattery, setSelectedBattery] = useState('');
@@ -68,7 +68,7 @@ const ProductDetail: React.FC = () => {
   };
 
   const handleAddToCart = () => {
-    addToCart(product, quantity, selectedVariant?.color, selectedBattery);
+    addItem(product, quantity, selectedVariant?.color, selectedBattery);
     setAddedToCart(true);
     setTimeout(() => setAddedToCart(false), 2000);
   };
@@ -81,11 +81,13 @@ const ProductDetail: React.FC = () => {
     }).format(price);
   };
 
+  const backToCategory = product?.category ? `/${product.category}` : '/bicicletas';
+
   return (
     <div className="min-h-screen bg-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link
-          to={`/${product.category}`}
+          to={backToCategory}
           className="inline-flex items-center gap-2 text-gray-700 hover:text-gray-900 mb-8 font-medium text-lg"
         >
           <ArrowLeft className="w-5 h-5" />

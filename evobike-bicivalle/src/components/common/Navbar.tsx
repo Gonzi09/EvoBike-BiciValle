@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-to-br from-primary-green-bright to-primary-green-dark rounded-lg"></div>
             <span className="text-xl font-heading font-bold text-text-primary">
-              EVO<span className="text-primary-green-bright">BIKE</span>
+              Movilidad<span className="text-primary-green-bright">Libre</span>
             </span>
           </Link>
 

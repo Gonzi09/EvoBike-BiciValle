@@ -1,6 +1,15 @@
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
+
 import productRoutes from './routes/products.js';
 import orderRoutes from './routes/orders.js';
 import adminRoutes from './routes/admin.js';
@@ -9,8 +18,12 @@ import userRoutes from './routes/users.js';
 import vendorRoutes from './routes/vendor.js';
 import testRoutes from './routes/test.js';
 import siigoRoutes from './routes/siigo.js';
+import checkoutRoutes from './routes/checkout.js';
+import webhookRoutes from './routes/webhooks.js';
 
-dotenv.config();
+if (!process.env.WOMPI_PUBLIC_KEY || !process.env.WOMPI_INTEGRITY_SECRET) {
+  throw new Error('Missing WOMPI_PUBLIC_KEY or WOMPI_INTEGRITY_SECRET');
+}
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -19,11 +32,8 @@ app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:3000',
   credentials: true,
 }));
-app.use(express.json());
 
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Evobike API is running' });
-});
+app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
@@ -33,16 +43,9 @@ app.use('/api/users', userRoutes);
 app.use('/api/vendor', vendorRoutes);
 app.use('/api/test', testRoutes);
 app.use('/api/siigo', siigoRoutes);
-
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.error('Error:', err);
-  res.status(err.status || 500).json({
-    error: err.message || 'Internal server error',
-  });
-});
+app.use('/api/checkout', checkoutRoutes);
+app.use('/api/webhooks', webhookRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
-  console.log(`Frontend URL: ${process.env.FRONTEND_URL}`);
-  console.log(`Auth enabled with JWT`);
 });

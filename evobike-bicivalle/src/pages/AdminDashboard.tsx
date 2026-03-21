@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Package, ShoppingCart, TrendingUp, AlertTriangle, Bell } from 'lucide-react';
+import { Package, ShoppingCart, TrendingUp, AlertTriangle, Bell, Box } from 'lucide-react';
 import { fetchAdminStats, fetchNotifications } from '../utils/api';
 
 const AdminDashboard: React.FC = () => {
@@ -50,7 +50,7 @@ const AdminDashboard: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">Panel de Administración</h1>
-          <p className="text-gray-600">Gestiona pedidos, inventario y notificaciones</p>
+          <p className="text-gray-600">Gestiona pedidos, inventario y productos</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -101,7 +101,16 @@ const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+          <Link
+            to="/admin/products"
+            className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:border-green-500 hover:shadow-lg transition-all"
+          >
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">Gestionar Productos</h3>
+            <p className="text-gray-600 mb-4">Editar catálogo y sincronizar con Siigo</p>
+            <div className="text-green-600 font-medium">Ver productos →</div>
+          </Link>
+
           <Link
             to="/admin/orders"
             className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:border-green-500 hover:shadow-lg transition-all"

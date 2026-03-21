@@ -62,6 +62,8 @@ const Home: React.FC = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
   };
 
+  const currentSlideLink = slides[currentSlide]?.link || '/bicicletas';
+
   return (
     <div className="min-h-screen">
       <section className="relative h-screen overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800">
@@ -93,7 +95,7 @@ const Home: React.FC = () => {
                 {slides[currentSlide].description}
               </p>
               <Link
-                to={slides[currentSlide].link}
+                to={currentSlideLink}
                 className="inline-flex items-center gap-3 bg-pink-500 text-white px-8 py-4 rounded-lg text-xl font-bold hover:bg-pink-600 transition-all shadow-2xl hover:shadow-pink-500/50 transform hover:scale-105"
               >
                 Explorar colección

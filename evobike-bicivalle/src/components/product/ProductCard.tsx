@@ -6,6 +6,8 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const productUrl = product?.id ? `/product/${product.id}` : '/bicicletas';
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-CO', {
       style: 'currency',
@@ -16,7 +18,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <Link
-      to={`/product/${product.id}`}
+      to={productUrl}
       className="group bg-white rounded-xl overflow-hidden border-2 border-gray-200 hover:border-green-500 hover:shadow-2xl transition-all duration-300"
     >
       <div className="relative h-80 bg-white flex items-center justify-center p-6 overflow-hidden">

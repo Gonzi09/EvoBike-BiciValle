@@ -90,11 +90,17 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   // Load cart from localStorage on mount
   useEffect(() => {
-    const savedCart = localStorage.getItem('evobike-cart');
+    const savedCart = localStorage.getItem('cart');
     if (savedCart) {
       try {
         const parsed = JSON.parse(savedCart);
-        dispatch({ type: 'LOAD_CART', payload: parsed });
+        dispatch({
+          type: 'LOAD_CART',
+          payload: {
+            items: parsed,
+            total: calculateTotal(parsed),
+          },
+        });
       } catch (error) {
         console.error('Error loading cart:', error);
       }
@@ -103,8 +109,8 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem('evobike-cart', JSON.stringify(state));
-  }, [state]);
+    localStorage.setItem('cart', JSON.stringify(state.items));
+  }, [state.items]);
 
   const addItem = (product: Product, quantity: number = 1, variant?: string) => {
     dispatch({ type: 'ADD_ITEM', payload: { product, quantity, variant } });
@@ -120,6 +126,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const clearCart = () => {
     dispatch({ type: 'CLEAR_CART' });
+    localStorage.removeItem('cart');
   };
 
   const itemCount = state.items.reduce((sum, item) => sum + item.quantity, 0);

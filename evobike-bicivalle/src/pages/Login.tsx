@@ -41,8 +41,8 @@ const Login: React.FC = () => {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
               <Lock className="w-8 h-8 text-green-600" />
             </div>
-            <h2 className="text-3xl font-bold text-gray-900">EVOBIKE</h2>
-            <p className="text-gray-600 mt-2">Sistema de Gestión</p>
+              <h2 className="text-3xl font-bold text-gray-900">MOVILLIBRE</h2>
+              <p className="text-gray-600 mt-2">Sistema de Gestión</p>
           </div>
 
           {error && (
@@ -101,8 +101,8 @@ const Login: React.FC = () => {
           <div className="mt-8 pt-6 border-t border-gray-200">
             <p className="text-xs text-gray-500 text-center">Credenciales de prueba:</p>
             <div className="mt-2 space-y-1 text-xs text-gray-600 text-center">
-              <p>Admin: admin@evobike.com / admin123</p>
-              <p>Vendedor: vendedor1@evobike.com / vendor123</p>
+              <p>Admin: admin@movilibre.com / admin123</p>
+              <p>Vendedor: vendedor1@movilibre.com / vendor123</p>
             </div>
           </div>
         </div>

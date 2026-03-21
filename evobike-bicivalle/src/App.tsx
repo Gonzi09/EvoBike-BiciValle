@@ -17,6 +17,8 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminOrders from './pages/AdminOrders';
 import AdminInventory from './pages/AdminInventory';
 import AdminAuditLogs from './pages/AdminAuditLogs';
+import AdminProducts from './pages/AdminProducts';
+import PaymentResult from './pages/PaymentResult';
 
 function App() {
   return (
@@ -39,6 +41,7 @@ function App() {
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/success" element={<Success />} />
                 <Route path="/contacto" element={<Contact />} />
+                <Route path="/payment-result" element={<PaymentResult />} />
                 
                 <Route
                   path="/admin"
@@ -61,6 +64,14 @@ function App() {
                   element={
                     <ProtectedRoute requireAdmin>
                       <AdminInventory />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/products"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminProducts />
                     </ProtectedRoute>
                   }
                 />
