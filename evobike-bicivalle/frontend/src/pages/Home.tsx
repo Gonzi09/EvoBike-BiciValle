@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, ChevronLeft, ArrowRight } from 'lucide-react';
-import ProductCard from '../components/product/ProductCard';
+import { ChevronRight, ArrowRight } from 'lucide-react';
 import { fetchProducts } from '../utils/api';
 
 const Home: React.FC = () => {
   /* ─── ALL LOGIC UNCHANGED ─────────────────────────────── */
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [popularProducts, setPopularProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -38,13 +36,6 @@ const Home: React.FC = () => {
     loadPopularProducts();
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [slides.length]);
-
   const loadPopularProducts = async () => {
     try {
       const data = await fetchProducts({ limit: '6' });
@@ -57,8 +48,6 @@ const Home: React.FC = () => {
     }
   };
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
   /* ─────────────────────────────────────────────────────── */
 
   const specs = [
@@ -174,8 +163,8 @@ const Home: React.FC = () => {
         >
           {/* Clean 3-column grid layout */}
           <div
-            className="flex flex-col lg:grid lg:grid-cols-12 lg:items-center py-8 md:py-12 lg:py-0 gap-4 md:gap-6 lg:gap-4"
-            style={{ gridAutoRows: 'minmax(auto, 1fr)', minHeight: 'auto', lg: { minHeight: '100vh' } }}
+            className="flex flex-col lg:grid lg:grid-cols-12 lg:items-center py-8 md:py-12 lg:py-0 gap-4 md:gap-6 lg:gap-4 lg:min-h-screen"
+            style={{ gridAutoRows: 'minmax(auto, 1fr)', minHeight: 'auto' }}
           >
 
             {/* ══════════════════════════════
@@ -406,7 +395,7 @@ const Home: React.FC = () => {
 
                 {/* Main image — NO background, floats free */}
                 <img
-                  src="/imgs/zeusfondo.png"
+                  src="/imgs/aguilaFondo.png"
                   alt="Scooter Aguila"
                   style={{
                     display: 'block',
@@ -465,77 +454,6 @@ const Home: React.FC = () => {
                       'linear-gradient(to right, transparent, rgba(46,158,212,0.62), rgba(0,191,255,0.28), transparent)',
                   }}
                 />
-              </div>
-
-              {/* ── Controls — hidden on mobile ── */}
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '4%',
-                  left: 0,
-                  right: 0,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: '10px',
-                  zIndex: 15,
-                }}
-                className="hidden md:flex"
-              >
-                {/* Nav + 360° */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-                  <button
-                    onClick={prevSlide}
-                    aria-label="Anterior"
-                    style={{
-                      width: '36px', height: '36px', borderRadius: '50%',
-                      border: '1px solid rgba(30,45,66,0.75)',
-                      background: 'transparent',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      color: '#2A3B4C', cursor: 'pointer',
-                    }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#2E9ED4'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(46,158,212,0.45)'; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = '#2A3B4C'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(30,45,66,0.75)'; }}
-                  >
-                    <ChevronLeft style={{ width: '15px', height: '15px' }} />
-                  </button>
-
-                  {/* 360° ring */}
-                  <div style={{ position: 'relative', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <div style={{ position: 'absolute', inset: 0, borderRadius: '50%', border: '1px solid rgba(46,158,212,0.18)' }} />
-                    <div style={{
-                      position: 'absolute', inset: '3px', borderRadius: '50%',
-                      border: '1px solid transparent',
-                      borderTopColor: 'rgba(46,158,212,0.72)',
-                      borderRightColor: 'rgba(46,158,212,0.18)',
-                      animation: 'spin 7s linear infinite',
-                    }} />
-                    <span style={{ color: '#2E9ED4', fontSize: '10px', fontWeight: 700, letterSpacing: '0.08em' }}>360°</span>
-                  </div>
-
-                  <button
-                    onClick={nextSlide}
-                    aria-label="Siguiente"
-                    style={{
-                      width: '36px', height: '36px', borderRadius: '50%',
-                      border: '1px solid rgba(30,45,66,0.75)',
-                      background: 'transparent',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      color: '#2A3B4C', cursor: 'pointer',
-                    }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#2E9ED4'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(46,158,212,0.45)'; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = '#2A3B4C'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(30,45,66,0.75)'; }}
-                  >
-                    <ChevronRight style={{ width: '15px', height: '15px' }} />
-                  </button>
-                </div>
-
-                {/* Counter */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ color: '#2E9ED4', fontSize: '10px', fontWeight: 700, fontFamily: 'monospace' }}>0{currentSlide + 1}</span>
-                  <div style={{ width: '28px', height: '1px', background: 'rgba(30,45,66,0.9)' }} />
-                  <span style={{ color: '#1F2D3D', fontSize: '10px', fontFamily: 'monospace' }}>0{slides.length}</span>
-                </div>
               </div>
 
             </div>
@@ -643,39 +561,51 @@ const Home: React.FC = () => {
       {/* ══════════════════════════════════════════════════════
           2. FEATURED CATEGORY
       ══════════════════════════════════════════════════════ */}
-      <section className="bg-[#F7F9FC] py-24 border-b border-[#E2E8F0]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-
-            <div className="overflow-hidden rounded-2xl bg-[#E2E8F0] aspect-[4/3]">
-              <img src={slides[0].image} alt={slides[0].eyebrow} className="w-full h-full object-cover" />
+      <section className="bg-[#F7F7F7] py-24 border-b border-[#E2E8F0]">
+        <div className="max-w-[110rem] mx-auto px-6 lg:px-12">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+            <div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#111827] tracking-tight">
+                Hay una oferta diseñada para ti.
+              </h2>
             </div>
-
-            <div className="lg:pl-8">
-              <span className="text-[#2E9ED4] text-[11px] font-bold uppercase tracking-[0.4em] block mb-4">Más Vendido</span>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0B1220] tracking-tight mb-6">Bicicletas<br />Eléctricas</h2>
-              <p className="text-[#6B7280] text-lg sm:text-xl leading-relaxed mb-8 max-w-sm font-medium">
-                Diseñadas para la ciudad. Silenciosas, eficientes y con estilo que convierte cada trayecto en una experiencia.
+            <div className="md:max-w-sm">
+              <p className="text-[#6B7280] text-base sm:text-lg leading-relaxed mb-4">
+                Explora opciones prácticas y cómodas para tu movilidad diaria.
               </p>
-              <div className="space-y-4 mb-8">
-                {[{ label: 'Motor', value: 'Alta eficiencia' }, { label: 'Batería', value: 'Larga duración' }, { label: 'Garantía', value: '1 año completo' }].map(({ label, value }) => (
-                  <div key={label} className="flex items-center justify-between py-3 border-b border-[#E2E8F0]">
-                    <span className="text-[#6B7280] text-base font-medium">{label}</span>
-                    <span className="text-[#0B1220] text-base font-bold">{value}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="flex items-center gap-5">
-                <div>
-                  <p className="text-[#6B7280] text-sm mb-1">Desde</p>
-                  <p className="text-4xl font-bold text-[#0B1220]">$2.100.000</p>
-                </div>
-                <Link to="/bicicletas" className="inline-flex items-center gap-2 bg-[#2E9ED4] text-white px-8 py-3.5 rounded-xl text-base font-semibold hover:bg-[#00BFFF] transition-colors duration-200">
-                  Ver modelos <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
+              <Link
+                to="/bicicletas"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#D1D5DB] text-[#374151] text-sm font-medium hover:border-[#9CA3AF] hover:text-[#111827] transition-colors"
+              >
+                Ver todo <ChevronRight className="w-4 h-4" />
+              </Link>
             </div>
+          </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              { img: '/imgs/polar.png', title: 'Bicicletas Eléctricas', link: '/bicicletas', position: 'center 26%' },
+              { img: '/imgs/Monopatines.png', title: 'Scooters Eléctricos', link: '/scooters', position: 'center 33%' },
+              { img: '/imgs/Ricochet.jpeg', title: 'Triciclos Eléctricos', link: '/triciclos', position: 'center 24%' },
+            ].map((item) => (
+              <Link
+                key={item.link}
+                to={item.link}
+                className="group block bg-white rounded-2xl shadow-md border border-[#E5E7EB] overflow-hidden"
+              >
+                <div className="h-[24.5rem] bg-[#F3F4F6] overflow-hidden rounded-t-2xl">
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                    style={{ objectPosition: item.position }}
+                  />
+                </div>
+                <div className="px-5 py-4 border-t border-[#F1F5F9] min-h-[120px] flex items-center justify-center">
+                  <h3 className="text-[#111827] text-xl font-medium text-center">{item.title}</h3>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -710,7 +640,7 @@ const Home: React.FC = () => {
       {/* ══════════════════════════════════════════════════════
           4. PRODUCT GRID
       ══════════════════════════════════════════════════════ */}
-      <section className="bg-[#F7F9FC] py-24 border-b border-[#E2E8F0]">
+      <section className="bg-[#FAFAFA] py-24 border-b border-[#E5E7EB]">
         <div className="max-w-7xl mx-auto px-6 lg:px-16">
 
           <div className="flex items-end justify-between mb-12">
@@ -725,27 +655,61 @@ const Home: React.FC = () => {
 
           {loading ? (
             <div className="flex items-center justify-center py-24 gap-3">
-              <div className="w-6 h-6 border-2 border-[#2E9ED4] border-t-transparent rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-[#94A3B8] border-t-transparent rounded-full animate-spin" />
               <span className="text-[#6B7280] text-base font-medium">Cargando...</span>
             </div>
           ) : popularProducts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {popularProducts.map(product => <ProductCard key={product.id} product={product} />)}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {popularProducts.map((product) => (
+                <Link
+                  key={product.id}
+                  to={product?.id ? `/product/${product.id}` : '/bicicletas'}
+                  className="group block bg-white rounded-2xl border border-[#E5E7EB] shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-300"
+                >
+                  <div className="h-56 bg-white rounded-t-2xl flex items-center justify-center p-8 overflow-hidden">
+                    <img
+                      src={product?.images?.[0] || '/imgs/Bicis.webp'}
+                      alt={product?.name || 'Producto'}
+                      className="max-h-full w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
+                  </div>
+                  <div className="px-6 py-5 border-t border-[#F1F5F9]">
+                    <h3 className="text-[#111827] text-lg font-medium leading-snug mb-2">{product?.name}</h3>
+                    <p className="text-[#374151] text-base font-medium mb-4">
+                      {new Intl.NumberFormat('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
+                        minimumFractionDigits: 0,
+                      }).format(product?.price || 0)}
+                    </p>
+                    <span className="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-[#D1D5DB] text-[#374151] text-sm font-medium group-hover:border-[#9CA3AF] group-hover:text-[#111827] transition-colors">
+                      Ver producto
+                    </span>
+                  </div>
+                </Link>
+              ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 { img: '/imgs/Bicis.webp',           title: 'Bicicletas Eléctricas', price: 'Desde $2,100,000', link: '/bicicletas' },
                 { img: '/imgs/Patineta-Evobike.webp', title: 'Scooters Eléctricos',  price: 'Desde $1,599,000', link: '/scooters'   },
                 { img: '/imgs/Triciclos.webp',         title: 'Triciclos Eléctricos', price: 'Desde $4,299,000', link: '/triciclos'  },
               ].map(cat => (
-                <Link key={cat.link} to={cat.link} className="group block bg-white rounded-2xl overflow-hidden border border-[#E2E8F0] hover:shadow-lg transition-all duration-300">
-                  <div className="h-56 overflow-hidden bg-[#F0F4F8]">
-                    <img src={cat.img} alt={cat.title} className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500" />
+                <Link
+                  key={cat.link}
+                  to={cat.link}
+                  className="group block bg-white rounded-2xl border border-[#E5E7EB] shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-300"
+                >
+                  <div className="h-56 bg-white flex items-center justify-center p-8 overflow-hidden rounded-t-2xl">
+                    <img src={cat.img} alt={cat.title} className="max-h-full w-auto object-contain group-hover:scale-[1.02] transition-transform duration-300" />
                   </div>
-                  <div className="px-6 py-5 border-t border-[#E2E8F0]">
-                    <h3 className="font-bold text-[#0B1220] mb-2 text-lg">{cat.title}</h3>
-                    <p className="text-[#6B7280] text-base font-medium">{cat.price}</p>
+                  <div className="px-6 py-5 border-t border-[#F1F5F9]">
+                    <h3 className="text-[#111827] text-lg font-medium mb-2">{cat.title}</h3>
+                    <p className="text-[#374151] text-base font-medium mb-4">{cat.price}</p>
+                    <span className="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-[#D1D5DB] text-[#374151] text-sm font-medium group-hover:border-[#9CA3AF] group-hover:text-[#111827] transition-colors">
+                      Ver categoría
+                    </span>
                   </div>
                 </Link>
               ))}
