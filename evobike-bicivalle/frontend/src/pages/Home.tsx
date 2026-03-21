@@ -570,14 +570,14 @@ const Home: React.FC = () => {
               </h2>
             </div>
             <div className="md:max-w-sm">
-              <p className="text-[#6B7280] text-base sm:text-lg leading-relaxed mb-4">
+              <p className="text-gray-800 text-lg font-semibold leading-relaxed mb-4 max-w-md">
                 Explora opciones prácticas y cómodas para tu movilidad diaria.
               </p>
               <Link
                 to="/bicicletas"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#D1D5DB] text-[#374151] text-sm font-medium hover:border-[#9CA3AF] hover:text-[#111827] transition-colors"
+                className="group inline-flex items-center bg-[#2E9ED4] text-white px-6 py-3 rounded-xl text-base font-semibold shadow-sm hover:bg-[#1e7fab] hover:shadow-md transition-all duration-200"
               >
-                Ver todo <ChevronRight className="w-4 h-4" />
+                Ver todo <ChevronRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
             </div>
           </div>
