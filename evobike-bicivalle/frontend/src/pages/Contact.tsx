@@ -28,13 +28,14 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen py-16">
+    <div className="min-h-screen bg-[#0B1220] py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-heading font-bold text-text-primary mb-4">
+        <div className="text-center mb-16">
+          <span className="text-[#2E9ED4] text-[11px] font-bold uppercase tracking-[0.4em] block mb-4">Soporte</span>
+          <h1 className="text-4xl md:text-5xl font-heading font-bold text-[#F9FAFB] mb-4">
             Contáctanos
           </h1>
-          <p className="text-text-secondary text-lg max-w-2xl mx-auto">
+          <p className="text-[#9CA3AF] text-lg max-w-2xl mx-auto">
             ¿Tienes alguna pregunta? Estamos aquí para ayudarte. Completa el formulario o usa nuestros datos de contacto.
           </p>
         </div>
@@ -42,36 +43,36 @@ const Contact: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Contact Info */}
           <div className="space-y-6">
-            <div className="bg-primary-surface rounded-lg p-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary-green-bright to-primary-green-dark rounded-lg flex items-center justify-center mb-4">
+            <div className="glass rounded-2xl p-6 hover:shadow-glow transition-all duration-300">
+              <div className="w-12 h-12 bg-gradient-to-br from-[#2E9ED4] to-[#1a5f8f] rounded-xl flex items-center justify-center mb-4">
                 <Phone className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-text-primary font-heading font-semibold text-lg mb-2">
+              <h3 className="text-[#F9FAFB] font-heading font-semibold text-lg mb-2">
                 Teléfono
               </h3>
-              <p className="text-text-secondary">+57 (1) 234-5678</p>
-              <p className="text-text-secondary">Lun - Vie: 9:00 AM - 6:00 PM</p>
+              <p className="text-[#9CA3AF]">+57 (1) 234-5678</p>
+              <p className="text-[#9CA3AF] text-sm">Lun - Vie: 9:00 AM - 6:00 PM</p>
             </div>
 
-            <div className="bg-primary-surface rounded-lg p-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary-green-bright to-primary-green-dark rounded-lg flex items-center justify-center mb-4">
+            <div className="glass rounded-2xl p-6 hover:shadow-glow transition-all duration-300">
+              <div className="w-12 h-12 bg-gradient-to-br from-[#2E9ED4] to-[#1a5f8f] rounded-xl flex items-center justify-center mb-4">
                 <Mail className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-text-primary font-heading font-semibold text-lg mb-2">
+              <h3 className="text-[#F9FAFB] font-heading font-semibold text-lg mb-2">
                 Email
               </h3>
-              <p className="text-text-secondary">info@evobike.com.co</p>
-              <p className="text-text-secondary">ventas@evobike.com.co</p>
+              <p className="text-[#9CA3AF]">info@evobike.com.co</p>
+              <p className="text-[#9CA3AF] text-sm">ventas@evobike.com.co</p>
             </div>
 
-            <div className="bg-primary-surface rounded-lg p-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary-green-bright to-primary-green-dark rounded-lg flex items-center justify-center mb-4">
+            <div className="glass rounded-2xl p-6 hover:shadow-glow transition-all duration-300">
+              <div className="w-12 h-12 bg-gradient-to-br from-[#2E9ED4] to-[#1a5f8f] rounded-xl flex items-center justify-center mb-4">
                 <MapPin className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-text-primary font-heading font-semibold text-lg mb-2">
+              <h3 className="text-[#F9FAFB] font-heading font-semibold text-lg mb-2">
                 Ubicación
               </h3>
-              <p className="text-text-secondary">
+              <p className="text-[#9CA3AF] text-sm">
                 Calle 72 #10-51<br />
                 Bogotá, Colombia<br />
                 110221
@@ -81,16 +82,16 @@ const Contact: React.FC = () => {
 
           {/* Contact Form */}
           <div className="lg:col-span-2">
-            <div className="bg-primary-surface rounded-lg p-8">
+            <div className="glass rounded-2xl p-8">
               {submitted ? (
                 <div className="text-center py-12">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary-green-bright to-primary-green-dark rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-[#2E9ED4] to-[#00BFFF] rounded-full flex items-center justify-center mx-auto mb-4 animate-glow">
                     <Send className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-heading font-bold text-text-primary mb-2">
+                  <h3 className="text-2xl font-heading font-bold text-[#F9FAFB] mb-2">
                     ¡Mensaje Enviado!
                   </h3>
-                  <p className="text-text-secondary">
+                  <p className="text-[#9CA3AF]">
                     Gracias por contactarnos. Te responderemos pronto.
                   </p>
                 </div>
@@ -98,7 +99,7 @@ const Contact: React.FC = () => {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-text-secondary text-sm font-medium mb-2">
+                      <label className="block text-[#9CA3AF] text-sm font-semibold mb-2">
                         Nombre completo *
                       </label>
                       <input
@@ -107,12 +108,12 @@ const Contact: React.FC = () => {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 bg-primary-bg border border-gray-700 rounded-lg text-text-primary focus:outline-none focus:border-primary-green-bright transition-colors duration-200"
+                        className="input-glass w-full"
                         placeholder="Tu nombre"
                       />
                     </div>
                     <div>
-                      <label className="block text-text-secondary text-sm font-medium mb-2">
+                      <label className="block text-[#9CA3AF] text-sm font-semibold mb-2">
                         Email *
                       </label>
                       <input
@@ -121,7 +122,7 @@ const Contact: React.FC = () => {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 bg-primary-bg border border-gray-700 rounded-lg text-text-primary focus:outline-none focus:border-primary-green-bright transition-colors duration-200"
+                        className="input-glass w-full"
                         placeholder="tu@email.com"
                       />
                     </div>
@@ -129,7 +130,7 @@ const Contact: React.FC = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-text-secondary text-sm font-medium mb-2">
+                      <label className="block text-[#9CA3AF] text-sm font-semibold mb-2">
                         Teléfono
                       </label>
                       <input
@@ -137,12 +138,12 @@ const Contact: React.FC = () => {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 bg-primary-bg border border-gray-700 rounded-lg text-text-primary focus:outline-none focus:border-primary-green-bright transition-colors duration-200"
+                        className="input-glass w-full"
                         placeholder="+57 300 123 4567"
                       />
                     </div>
                     <div>
-                      <label className="block text-text-secondary text-sm font-medium mb-2">
+                      <label className="block text-[#9CA3AF] text-sm font-semibold mb-2">
                         Asunto *
                       </label>
                       <select
@@ -150,7 +151,7 @@ const Contact: React.FC = () => {
                         value={formData.subject}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 bg-primary-bg border border-gray-700 rounded-lg text-text-primary focus:outline-none focus:border-primary-green-bright transition-colors duration-200"
+                        className="input-glass w-full appearance-none cursor-pointer"
                       >
                         <option value="">Selecciona un asunto</option>
                         <option value="ventas">Consulta de Ventas</option>
@@ -162,7 +163,7 @@ const Contact: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-text-secondary text-sm font-medium mb-2">
+                    <label className="block text-[#9CA3AF] text-sm font-semibold mb-2">
                       Mensaje *
                     </label>
                     <textarea
@@ -171,14 +172,14 @@ const Contact: React.FC = () => {
                       onChange={handleChange}
                       required
                       rows={6}
-                      className="w-full px-4 py-3 bg-primary-bg border border-gray-700 rounded-lg text-text-primary focus:outline-none focus:border-primary-green-bright transition-colors duration-200 resize-none"
+                      className="input-glass w-full resize-none"
                       placeholder="Escribe tu mensaje aquí..."
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full bg-accent-fuchsia text-white py-4 rounded-lg font-semibold text-lg hover:bg-accent-fuchsia-hover transition-all duration-200 hover:shadow-glow-fuchsia flex items-center justify-center space-x-2"
+                    className="btn-premium w-full"
                   >
                     <Send className="w-5 h-5" />
                     <span>Enviar Mensaje</span>

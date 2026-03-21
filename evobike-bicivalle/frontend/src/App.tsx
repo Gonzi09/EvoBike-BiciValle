@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './contexts/CartContext';
 import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/common/ProtectedRoute';
@@ -30,7 +30,7 @@ function App() {
             <main className="flex-1 pt-16">
               <Routes>
                 <Route path="/login" element={<Login />} />
-                
+
                 <Route path="/" element={<Home />} />
                 <Route path="/bicicletas" element={<Collection />} />
                 <Route path="/scooters" element={<Collection />} />
@@ -39,10 +39,10 @@ function App() {
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
+                <Route path="/checkout/result" element={<PaymentResult />} />
                 <Route path="/success" element={<Success />} />
                 <Route path="/contacto" element={<Contact />} />
-                <Route path="/payment-result" element={<PaymentResult />} />
-                
+
                 <Route
                   path="/admin"
                   element={
@@ -84,14 +84,21 @@ function App() {
                   }
                 />
 
-                <Route path="/unauthorized" element={
-                  <div className="min-h-screen flex items-center justify-center">
-                    <div className="text-center">
-                      <h1 className="text-4xl font-bold text-gray-900 mb-4">Acceso Denegado</h1>
-                      <p className="text-gray-600">No tienes permisos para acceder a esta página</p>
+                <Route
+                  path="/unauthorized"
+                  element={
+                    <div className="min-h-screen flex items-center justify-center">
+                      <div className="text-center">
+                        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+                          Acceso Denegado
+                        </h1>
+                        <p className="text-gray-600">
+                          No tienes permisos para acceder a esta página
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                } />
+                  }
+                />
               </Routes>
             </main>
             <Footer />

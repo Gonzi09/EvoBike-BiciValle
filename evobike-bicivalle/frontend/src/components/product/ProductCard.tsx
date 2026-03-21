@@ -19,54 +19,45 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <Link
       to={productUrl}
-      className="group bg-white rounded-xl overflow-hidden border-2 border-gray-200 hover:border-green-500 hover:shadow-2xl transition-all duration-300"
+      className="group block bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-card-hover transition-all duration-500"
     >
-      <div className="relative h-80 bg-white flex items-center justify-center p-6 overflow-hidden">
+      {/* Image */}
+      <div className="relative h-72 bg-gray-50 flex items-center justify-center p-8 overflow-hidden">
         <img
           src={product.images[0]}
           alt={product.name}
-          className="max-h-full w-auto object-contain group-hover:scale-110 transition-transform duration-500"
+          className="max-h-full w-auto object-contain group-hover:scale-[1.04] transition-transform duration-700 ease-out"
         />
-        
+
         {product.badge && (
-          <div className="absolute top-4 right-4 px-4 py-2 bg-pink-500 text-white text-sm font-bold rounded-full shadow-lg">
+          <span className="absolute top-4 left-4 px-2.5 py-1 bg-[#0B1220] text-white text-xs font-semibold rounded-full tracking-wide">
             {product.badge}
-          </div>
+          </span>
         )}
-        
+
         {!product.inStock && (
-          <div className="absolute inset-0 bg-gray-900/70 flex items-center justify-center">
-            <span className="px-8 py-3 bg-red-600 text-white font-bold rounded-lg text-lg shadow-xl">
-              AGOTADO
+          <div className="absolute inset-0 bg-white/70 backdrop-blur-[2px] flex items-center justify-center">
+            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+              Agotado
             </span>
           </div>
         )}
       </div>
 
-      <div className="p-6 bg-white">
-        <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-green-600 transition-colors">
+      {/* Info */}
+      <div className="px-6 py-5 border-t border-gray-100">
+        <h3 className="text-base font-bold text-gray-900 leading-snug mb-3 group-hover:text-[#2E9ED4] transition-colors duration-300">
           {product.name}
         </h3>
 
-        <div className="flex flex-wrap gap-2 mb-4">
-          {product.tags.slice(0, 3).map((tag: string) => (
-            <span
-              key={tag}
-              className="text-sm px-3 py-1 bg-gray-100 text-gray-700 rounded-full font-medium"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <div className="flex items-center justify-between mt-4">
-          <div className="text-3xl font-bold text-green-600">
+        <div className="flex items-center justify-between">
+          <span className="text-lg font-bold text-gray-900">
             {formatPrice(product.price)}
-          </div>
-          
+          </span>
+
           {product.inStock && (
-            <span className="text-base text-green-600 font-bold group-hover:translate-x-1 transition-transform">
-              Ver detalles →
+            <span className="text-xs text-[#2E9ED4] font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+              Ver más →
             </span>
           )}
         </div>
