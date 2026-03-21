@@ -27,7 +27,7 @@ const AdminProducts: React.FC = () => {
   const handleSyncInventory = async () => {
     try {
       setSyncing(true);
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+      const API_URL = import.meta.env.VITE_API_URL || 'https://api.movilibre.co/api';
       const token = localStorage.getItem('evobike_token');
 
       const response = await fetch(`${API_URL}/admin/sync-inventory`, {

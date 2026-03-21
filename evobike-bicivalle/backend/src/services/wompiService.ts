@@ -16,6 +16,7 @@ export class WompiService {
   createPaymentParams(orderData: any) {
     const publicKey = process.env.WOMPI_PUBLIC_KEY!;
     const integritySecret = process.env.WOMPI_INTEGRITY_SECRET!;
+    const frontendUrl = process.env.FRONTEND_URL || 'https://movilibre.co';
 
     const reference = this.generateReference();
     const amountInCents = Math.round(Number(orderData.total) * 100).toString();
@@ -28,7 +29,7 @@ export class WompiService {
       'amount-in-cents': amountInCents,
       reference,
       'signature:integrity': signature,
-      'redirect-url': 'http://localhost:5173/checkout/result',
+      'redirect-url': `${frontendUrl}/checkout/result`,
       'customer-data:email': orderData.email,
       'customer-data:full-name': orderData.customerName,
       'customer-data:phone-number': orderData.phone,

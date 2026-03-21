@@ -1,7 +1,7 @@
 import React from 'react';
 import { ShieldCheck, Lock, CreditCard } from 'lucide-react';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+const API_URL = import.meta.env.VITE_API_URL || 'https://api.movilibre.co';
 
 const Checkout: React.FC = () => {
 

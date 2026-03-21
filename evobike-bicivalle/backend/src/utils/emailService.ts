@@ -49,7 +49,7 @@ export class EmailService {
           </div>
 
           <p style="margin-top: 20px;">
-            <a href="http://localhost:3000/admin/orders" 
+            <a href="https://movilibre.co/admin/orders" 
                style="background: #16a34a; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
               Ver en Panel Admin
             </a>
@@ -239,7 +239,7 @@ export class EmailService {
             </p>
 
             <p style="margin-top: 20px;">
-              <a href="http://localhost:3000/admin/inventory" 
+              <a href="https://movilibre.co/admin/inventory" 
                  style="background: #16a34a; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
                 Gestionar Inventario
               </a>

@@ -19,6 +19,13 @@ import AdminInventory from './pages/AdminInventory';
 import AdminAuditLogs from './pages/AdminAuditLogs';
 import AdminProducts from './pages/AdminProducts';
 import PaymentResult from './pages/PaymentResult';
+import CheckoutResult from './pages/CheckoutResult';
+import BicicletasElectricasCali from './pages/BicicletasElectricasCali';
+import ScootersElectricosCali from './pages/ScootersElectricosCali';
+import TiendaBicicletasCali from './pages/TiendaBicicletasCali';
+import ComprarBicicletaCali from './pages/ComprarBicicletaCali';
+import ComoElegirBicicletaElectrica from './pages/ComoElegirBicicletaElectrica';
+import CuantoDuraBateriaBicicletaElectrica from './pages/CuantoDuraBateriaBicicletaElectrica';
 
 function App() {
   return (
@@ -39,9 +46,34 @@ function App() {
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
+                <Route path="/checkout/result" element={<CheckoutResult />} />
                 <Route path="/checkout/result" element={<PaymentResult />} />
                 <Route path="/success" element={<Success />} />
                 <Route path="/contacto" element={<Contact />} />
+                <Route
+                  path="/bicicletas-electricas-cali"
+                  element={<BicicletasElectricasCali />}
+                />
+                <Route
+                  path="/scooters-electricos-cali"
+                  element={<ScootersElectricosCali />}
+                />
+                <Route
+                  path="/tienda-bicicletas-electricas-cali"
+                  element={<TiendaBicicletasCali />}
+                />
+                <Route
+                  path="/comprar-bicicleta-electrica-cali"
+                  element={<ComprarBicicletaCali />}
+                />
+                <Route
+                  path="/como-elegir-bicicleta-electrica"
+                  element={<ComoElegirBicicletaElectrica />}
+                />
+                <Route
+                  path="/cuanto-dura-bateria-bicicleta-electrica"
+                  element={<CuantoDuraBateriaBicicletaElectrica />}
+                />
 
                 <Route
                   path="/admin"

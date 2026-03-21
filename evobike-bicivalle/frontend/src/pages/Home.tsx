@@ -10,21 +10,21 @@ const Home: React.FC = () => {
 
   const slides = [
     {
-      image: '/imgs/Bicis.webp',
+      image: '/imgs/polar.png',
       eyebrow: 'Bicicletas Eléctricas',
       title: 'Silencio\nen movimiento.',
       description: 'Potencia y estilo para la ciudad. El motor que nunca escucharás.',
       link: '/bicicletas',
     },
     {
-      image: '/imgs/Patineta-Evobike.webp',
+      image: '/imgs/Monopatines.png',
       eyebrow: 'Scooters Eléctricos',
       title: 'Ágil.\nLibre.\nEléctrico.',
       description: 'Movilidad urbana sin límites. Compacto, veloz, sin emisiones.',
       link: '/scooters',
     },
     {
-      image: '/imgs/Triciclos.webp',
+      image: '/imgs/Ricochet.jpeg',
       eyebrow: 'Triciclos Eléctricos',
       title: 'Más carga.\nMás alcance.',
       description: 'Estabilidad y capacidad de carga para el trabajo del día a día.',
@@ -710,7 +710,7 @@ const Home: React.FC = () => {
                 >
                   <div className="h-56 bg-white rounded-t-2xl flex items-center justify-center p-8 overflow-hidden">
                     <img
-                      src={product?.images?.[0] || '/imgs/Bicis.webp'}
+                      src={product?.images?.[0] || '/imgs/polar.png'}
                       alt={product?.name || 'Producto'}
                       className="max-h-full w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
                     />
@@ -734,9 +734,9 @@ const Home: React.FC = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { img: '/imgs/Bicis.webp',           title: 'Bicicletas Eléctricas', price: 'Desde $2,100,000', link: '/bicicletas' },
-                { img: '/imgs/Patineta-Evobike.webp', title: 'Scooters Eléctricos',  price: 'Desde $1,599,000', link: '/scooters'   },
-                { img: '/imgs/Triciclos.webp',         title: 'Triciclos Eléctricos', price: 'Desde $4,299,000', link: '/triciclos'  },
+                { img: '/imgs/polar.png',      title: 'Bicicletas Eléctricas', price: 'Desde $2,100,000', link: '/bicicletas' },
+                { img: '/imgs/Monopatines.png', title: 'Scooters Eléctricos',  price: 'Desde $1,599,000', link: '/scooters'   },
+                { img: '/imgs/Ricochet.jpeg',   title: 'Triciclos Eléctricos', price: 'Desde $4,299,000', link: '/triciclos'  },
               ].map(cat => (
                 <Link
                   key={cat.link}
