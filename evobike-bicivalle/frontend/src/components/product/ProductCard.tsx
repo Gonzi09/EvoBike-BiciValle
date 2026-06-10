@@ -6,60 +6,86 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const productUrl = product?.id ? `/product/${product.id}` : '/bicicletas';
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-CO', {
-      style: 'currency',
-      currency: 'COP',
-      minimumFractionDigits: 0,
-    }).format(price);
-  };
+  const coverImage = product?.coverImage ?? product?.images?.[0] ?? null;
+  const price = Number(product?.price ?? 0);
+  const name = product?.displayName ?? product?.name ?? '';
+  const linkTarget = product?.slug ? `/products/${product.slug}` : `/products/${product.code}`;
 
   return (
-    <Link
-      to={productUrl}
-      className="group block bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-card-hover transition-all duration-500"
-    >
-      {/* Image */}
-      <div className="relative h-72 bg-gray-50 flex items-center justify-center p-8 overflow-hidden">
-        <img
-          src={product.images[0]}
-          alt={product.name}
-          className="max-h-full w-auto object-contain group-hover:scale-[1.04] transition-transform duration-700 ease-out"
-        />
+    <Link to={linkTarget} style={{ textDecoration: 'none', display: 'block' }}>
+      <div
+        style={{
+          borderRadius: 16,
+          overflow: 'hidden',
+          boxShadow: '0 2px 12px rgba(0,0,0,0.1)',
+          transition: 'transform 0.2s ease',
+          cursor: 'pointer',
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-4px)')}
+        onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
+      >
+        {/* IMAGE */}
+        <div
+          style={{
+            background: '#f0f5f5',
+            height: 220,
+            overflow: 'hidden',
+            padding: 0,
+            margin: 0,
+            width: '100%',
+          }}
+        >
+          <img
+            src={coverImage ?? '/imgs/Ricochet.jpeg'}
+            alt={name}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+        </div>
 
-        {product.badge && (
-          <span className="absolute top-4 left-4 px-2.5 py-1 bg-[#0B1220] text-white text-xs font-semibold rounded-full tracking-wide">
-            {product.badge}
-          </span>
-        )}
-
-        {!product.inStock && (
-          <div className="absolute inset-0 bg-white/70 backdrop-blur-[2px] flex items-center justify-center">
-            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">
-              Agotado
-            </span>
+        {/* BODY */}
+        <div
+          style={{
+            background: '#1a1a1a',
+            borderTop: '3px solid #2E9ED4',
+            padding: 16,
+          }}
+        >
+          <div
+            style={{
+              fontFamily: 'Outfit',
+              fontSize: 15,
+              fontWeight: 500,
+              color: '#ffffff',
+              marginBottom: 4,
+            }}
+          >
+            {name}
           </div>
-        )}
-      </div>
-
-      {/* Info */}
-      <div className="px-6 py-5 border-t border-gray-100">
-        <h3 className="text-base font-bold text-gray-900 leading-snug mb-3 group-hover:text-[#2E9ED4] transition-colors duration-300">
-          {product.name}
-        </h3>
-
-        <div className="flex items-center justify-between">
-          <span className="text-lg font-bold text-gray-900">
-            {formatPrice(product.price)}
-          </span>
-
-          {product.inStock && (
-            <span className="text-xs text-[#2E9ED4] font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
-              Ver más →
-            </span>
-          )}
+          <div
+            style={{
+              fontFamily: 'Outfit',
+              fontSize: 20,
+              fontWeight: 500,
+              color: '#2E9ED4',
+              marginBottom: 14,
+            }}
+          >
+            ${price.toLocaleString('es-CO')}
+          </div>
+          <div
+            style={{
+              fontFamily: 'Outfit',
+              textAlign: 'center',
+              padding: 10,
+              background: '#2E9ED4',
+              borderRadius: 8,
+              color: '#ffffff',
+              fontSize: 13,
+              fontWeight: 500,
+            }}
+          >
+            Ver producto →
+          </div>
         </div>
       </div>
     </Link>

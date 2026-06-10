@@ -1,4 +1,6 @@
-const API_URL = import.meta.env.VITE_API_URL || 'https://api.movilibre.co/api';
+// const API_URL = import.meta.env.VITE_API_URL || 'https://api.movilibre.co/api';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('evobike_token');
@@ -9,17 +11,34 @@ const getAuthHeaders = () => {
 };
 
 // Products
+export const fetchGroupBySlug = async (slug: string) => {
+  const response = await fetch(`${API_URL}/products/group/${slug}`)
+  if (!response.ok) throw new Error('Error fetching product')
+  const json = await response.json()
+  return json.data ?? json
+}
+
+export const fetchGroupedProducts = async (category?: string) => {
+  const params = category ? `?category=${category}` : ''
+  const response = await fetch(`${API_URL}/products/grouped${params}`)
+  if (!response.ok) throw new Error('Error fetching grouped products')
+  const json = await response.json()
+  return json.data ?? json
+}
+
 export const fetchProducts = async (filters = {}) => {
   const params = new URLSearchParams(filters as any);
   const response = await fetch(`${API_URL}/products?${params}`);
   if (!response.ok) throw new Error('Error fetching products');
-  return response.json();
+  const json = await response.json();
+  return json.data ?? json;
 };
 
 export const fetchProductById = async (id: string) => {
   const response = await fetch(`${API_URL}/products/${id}`);
   if (!response.ok) throw new Error('Error fetching product');
-  return response.json();
+  const json = await response.json();
+  return json.data ?? json;
 };
 
 // Orders

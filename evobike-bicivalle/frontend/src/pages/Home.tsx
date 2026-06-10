@@ -1,55 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, ArrowRight } from 'lucide-react';
-import { fetchProducts } from '../utils/api';
+import { ChevronRight } from 'lucide-react';
 
 const Home: React.FC = () => {
-  /* ─── ALL LOGIC UNCHANGED ─────────────────────────────── */
-  const [popularProducts, setPopularProducts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const slides = [
-    {
-      image: '/imgs/polar.png',
-      eyebrow: 'Bicicletas Eléctricas',
-      title: 'Silencio\nen movimiento.',
-      description: 'Potencia y estilo para la ciudad. El motor que nunca escucharás.',
-      link: '/bicicletas',
-    },
-    {
-      image: '/imgs/Monopatines.png',
-      eyebrow: 'Scooters Eléctricos',
-      title: 'Ágil.\nLibre.\nEléctrico.',
-      description: 'Movilidad urbana sin límites. Compacto, veloz, sin emisiones.',
-      link: '/scooters',
-    },
-    {
-      image: '/imgs/Ricochet.jpeg',
-      eyebrow: 'Triciclos Eléctricos',
-      title: 'Más carga.\nMás alcance.',
-      description: 'Estabilidad y capacidad de carga para el trabajo del día a día.',
-      link: '/triciclos',
-    },
-  ];
-
-  useEffect(() => {
-    loadPopularProducts();
-  }, []);
-
-  const loadPopularProducts = async () => {
-    try {
-      const data = await fetchProducts({ limit: '6' });
-      const popular = data.products.filter((p: any) => p.popular);
-      setPopularProducts(popular.slice(0, 6));
-    } catch (error) {
-      console.error('Error loading products:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  /* ─────────────────────────────────────────────────────── */
-
   const specs = [
     { label: 'Potencia',        value: '350 W' },
     { label: 'Batería',         value: '60V / 20AH (extraíble)\n72V / 20AH (no extraíble)' },
@@ -677,89 +630,6 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
-
-
-      {/* ══════════════════════════════════════════════════════
-          4. PRODUCT GRID
-      ══════════════════════════════════════════════════════ */}
-      <section className="bg-[#FAFAFA] py-24 border-b border-[#E5E7EB]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-16">
-
-          <div className="flex items-end justify-between mb-12">
-            <div>
-              <span className="text-[#2E9ED4] text-[11px] font-bold uppercase tracking-[0.4em] block mb-3">Colección</span>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0B1220] tracking-tight">Productos Destacados</h2>
-            </div>
-            <Link to="/bicicletas" className="text-base text-[#6B7280] hover:text-[#2E9ED4] transition-colors flex items-center gap-1 group font-medium">
-              Ver todo <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-            </Link>
-          </div>
-
-          {loading ? (
-            <div className="flex items-center justify-center py-24 gap-3">
-              <div className="w-5 h-5 border-2 border-[#94A3B8] border-t-transparent rounded-full animate-spin" />
-              <span className="text-[#6B7280] text-base font-medium">Cargando...</span>
-            </div>
-          ) : popularProducts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {popularProducts.map((product) => (
-                <Link
-                  key={product.id}
-                  to={product?.id ? `/product/${product.id}` : '/bicicletas'}
-                  className="group block bg-white rounded-2xl border border-[#E5E7EB] shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-300"
-                >
-                  <div className="h-56 bg-white rounded-t-2xl flex items-center justify-center p-8 overflow-hidden">
-                    <img
-                      src={product?.images?.[0] || '/imgs/polar.png'}
-                      alt={product?.name || 'Producto'}
-                      className="max-h-full w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
-                    />
-                  </div>
-                  <div className="px-6 py-5 border-t border-[#F1F5F9]">
-                    <h3 className="text-[#111827] text-lg font-medium leading-snug mb-2">{product?.name}</h3>
-                    <p className="text-[#374151] text-base font-medium mb-4">
-                      {new Intl.NumberFormat('es-CO', {
-                        style: 'currency',
-                        currency: 'COP',
-                        minimumFractionDigits: 0,
-                      }).format(product?.price || 0)}
-                    </p>
-                    <span className="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-[#D1D5DB] text-[#374151] text-sm font-medium group-hover:border-[#9CA3AF] group-hover:text-[#111827] transition-colors">
-                      Ver producto
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                { img: '/imgs/polar.png',      title: 'Bicicletas Eléctricas', price: 'Desde $2,100,000', link: '/bicicletas' },
-                { img: '/imgs/Monopatines.png', title: 'Scooters Eléctricos',  price: 'Desde $1,599,000', link: '/scooters'   },
-                { img: '/imgs/Ricochet.jpeg',   title: 'Triciclos Eléctricos', price: 'Desde $4,299,000', link: '/triciclos'  },
-              ].map(cat => (
-                <Link
-                  key={cat.link}
-                  to={cat.link}
-                  className="group block bg-white rounded-2xl border border-[#E5E7EB] shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-300"
-                >
-                  <div className="h-56 bg-white flex items-center justify-center p-8 overflow-hidden rounded-t-2xl">
-                    <img src={cat.img} alt={cat.title} className="max-h-full w-auto object-contain group-hover:scale-[1.02] transition-transform duration-300" />
-                  </div>
-                  <div className="px-6 py-5 border-t border-[#F1F5F9]">
-                    <h3 className="text-[#111827] text-lg font-medium mb-2">{cat.title}</h3>
-                    <p className="text-[#374151] text-base font-medium mb-4">{cat.price}</p>
-                    <span className="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-[#D1D5DB] text-[#374151] text-sm font-medium group-hover:border-[#9CA3AF] group-hover:text-[#111827] transition-colors">
-                      Ver categoría
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
 
       {/* ══════════════════════════════════════════════════════
           5. FINAL CTA

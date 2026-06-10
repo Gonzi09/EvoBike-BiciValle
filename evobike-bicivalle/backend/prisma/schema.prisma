@@ -7,209 +7,56 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model ProductImage {
+  id        String   @id @default(cuid())
+  siigoCode String   @unique
+  images    String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProductCategory {
+  id        String   @id @default(cuid())
+  siigoCode String   @unique
+  category  String   // 'bicicleta' | 'scooter' | 'triciclo' | 'accesorio'
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProductGroup {
+  id          String           @id @default(cuid())
+  slug        String           @unique
+  displayName String
+  category    String
+  description String?
+  variants    ProductVariant[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model ProductVariant {
+  id         String       @id @default(cuid())
+  groupId    String
+  group      ProductGroup @relation(fields: [groupId], references: [id])
+  siigoCode  String       @unique
+  colorLabel String
+  images     String[]
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+}
+
 model User {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  password      String
-  name          String
-  role          UserRole @default(VENDOR)
-  isActive      Boolean  @default(true)
-  
-  canManageInventory Boolean @default(false)
-  canManageOrders    Boolean @default(false)
-  canManageUsers     Boolean @default(false)
-  canViewReports     Boolean @default(false)
-  
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  
-  ordersCreated Order[]  @relation("CreatedBy")
-  auditLogs     AuditLog[]
-  
-  @@index([email])
-  @@index([role])
-}
-
-model Product {
-  id             String   @id @default(uuid())
-  name           String
-  siigoCode      String?  @unique
-  price          Float
-  images         String[]
-  description    String   @db.Text
-  category       String
-  inventoryCount Int      @default(0)
-  tags           String[]
-  specs          Json
-  variants       Json?
-  batteryType    String?
-  batteryOptions Json?
-  badge          String?
-  popular        Boolean  @default(false)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  
-  orderItems     OrderItem[]
-  
-  @@index([category])
-  @@index([inventoryCount])
-  @@index([name])
-  @@index([siigoCode])
-}
-
-model Order {
-  id            String      @id @default(uuid())
-  orderNumber   String      @unique
-  status        OrderStatus @default(PENDING_PAYMENT)
-  
-  customerName  String
-  email         String
-  phone         String
-  city          String
-  address       String
-  notes         String?     @db.Text
-  
-  paymentMethod PaymentMethod
-  paymentType   PaymentType   @default(FULL_PAYMENT)
-  downPayment   Float?
-  remainingBalance Float?
-  isPaid        Boolean       @default(false)
-  
-  subtotal      Float
-  shipping      Float       @default(0)
-  tax           Float
-  total         Float
-  
-  saleType      SaleType    @default(ONLINE)
-  createdById   String?
-  createdBy     User?       @relation("CreatedBy", fields: [createdById], references: [id])
-  
-  items         OrderItem[]
-  notifications AdminNotification[]
-  payments      Payment[]
-  
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  
-  @@index([status])
-  @@index([createdAt])
-  @@index([email])
-  @@index([createdById])
-  @@index([saleType])
-}
-
-model OrderItem {
-  id              String  @id @default(uuid())
-  orderId         String
-  productId       String
-  nameSnapshot    String
-  priceSnapshot   Float
-  quantity        Int
-  selectedVariant String?
-  
-  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product Product @relation(fields: [productId], references: [id])
-  
-  @@index([orderId])
-  @@index([productId])
-}
-
-model Payment {
-  id          String        @id @default(uuid())
-  orderId     String
-  amount      Float
-  paymentType PaymentMethod
-  reference   String?
-  notes       String?       @db.Text
-  createdAt   DateTime      @default(now())
-  
-  order       Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  
-  @@index([orderId])
-}
-
-model AdminNotification {
-  id        String             @id @default(uuid())
-  type      NotificationType
-  message   String             @db.Text
-  isRead    Boolean            @default(false)
-  orderId   String?
-  
-  order     Order?             @relation(fields: [orderId], references: [id])
-  
-  createdAt DateTime           @default(now())
-  
-  @@index([isRead])
-  @@index([createdAt])
-}
-
-model AuditLog {
-  id        String      @id @default(uuid())
-  action    String
-  entity    String
-  entityId  String
-  changes   Json?
-  metadata  Json?
-  severity  LogSeverity @default(INFO)
-  message   String      @db.Text
-  userId    String?
-  user      User?       @relation(fields: [userId], references: [id])
-  createdAt DateTime    @default(now())
-  
-  @@index([action])
-  @@index([entity])
-  @@index([entityId])
-  @@index([createdAt])
-  @@index([severity])
-  @@index([userId])
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      UserRole @default(VENDOR)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum UserRole {
   ADMIN
   VENDOR
-  MANAGER
-}
-
-enum OrderStatus {
-  PENDING_PAYMENT
-  PARTIAL_PAYMENT
-  PAID
-  READY_TO_SHIP
-  SHIPPED
-  CANCELED
-  REFUNDED
-}
-
-enum PaymentMethod {
-  CARD
-  PSE
-  COD
-  PAYPAL
-  CASH
-  TRANSFER
-}
-
-enum PaymentType {
-  FULL_PAYMENT
-  DOWN_PAYMENT
-  INSTALLMENT
-}
-
-enum SaleType {
-  ONLINE
-  IN_PERSON
-}
-
-enum NotificationType {
-  ORDER_PAID
-  LOW_STOCK
-  NEW_USER
-  REFUND_REQUESTED
-}
-
-enum LogSeverity {
-  INFO
-  WARNING
-  ERROR
-  CRITICAL
 }

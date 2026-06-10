@@ -4,9 +4,9 @@ import { Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#0B1220] text-white py-14 border-t border-[#1e2d42]">
+    <footer className="bg-[#0B1220] text-white py-14 border-t border-[#1e2d42]" style={{ fontFamily: 'Outfit, sans-serif' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-start">
           {/* Brand */}
           <div>
             <div className="flex items-center space-x-2.5 mb-4">
@@ -65,20 +65,20 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Contact info */}
-          <div>
+          <div className="min-w-0">
             <h4 className="text-sm font-bold text-white uppercase tracking-widest mb-5">Contacto</h4>
             <ul className="space-y-3">
-              <li className="flex items-start gap-2.5 text-gray-400 text-sm">
+              <li className="flex items-start gap-2.5 text-gray-400 text-[13px] leading-relaxed min-w-0" style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>
                 <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5 text-[#2E9ED4]" />
-                <span>Av. Roosevelt #25-68 local 104, 3 de Julio, Cali, Valle del Cauca</span>
+                <span className="min-w-0" style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>Av. Roosevelt #25-68 local 104, 3 de Julio, Cali, Valle del Cauca</span>
               </li>
-              <li className="flex items-center gap-2.5 text-gray-400 text-sm">
+              <li className="flex items-center gap-2.5 text-gray-400 text-[13px] leading-relaxed min-w-0" style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>
                 <Phone className="w-4 h-4 flex-shrink-0 text-[#2E9ED4]" />
                 +57 318 4128902
               </li>
-              <li className="flex items-center gap-2.5 text-gray-400 text-sm">
+              <li className="flex items-start gap-2.5 text-gray-400 text-[13px] leading-relaxed min-w-0" style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>
                 <Mail className="w-4 h-4 flex-shrink-0 text-[#2E9ED4]" />
-                contacto.movilidadlibre@gmail.com
+                <span className="min-w-0" style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>contacto.movilidadlibre@gmail.com</span>
               </li>
             </ul>
           </div>
