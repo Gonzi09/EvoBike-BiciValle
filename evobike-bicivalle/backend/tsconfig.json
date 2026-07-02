@@ -13,28 +13,6 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": [
-    "src/index.ts",
-    "src/middleware/auth.ts",
-    "src/config/env.ts",
-    "src/config/prisma.ts",
-    "src/config/siigo.ts",
-    "src/providers/siigo.provider.ts",
-    "src/services/catalog.service.ts",
-    "src/services/inventory.service.ts",
-    "src/services/invoice.service.ts",
-    "src/controllers/products.controller.ts",
-    "src/controllers/checkout.controller.ts",
-    "src/controllers/admin.controller.ts",
-    "src/controllers/auth.controller.ts",
-    "src/routes/products.routes.ts",
-    "src/routes/checkout.routes.ts",
-    "src/routes/admin.routes.ts",
-    "src/routes/auth.routes.ts",
-    "src/types/api.types.ts",
-    "src/types/siigo.types.ts",
-    "src/types/product.types.ts",
-    "src/types/invoice.types.ts"
-  ],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
