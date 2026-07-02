@@ -153,13 +153,14 @@ export class CatalogService {
     });
     if (!group) return null;
 
-    const siigoProducts = await siigoProvider.getAllProducts();
-    const siigoMap = new Map(siigoProducts.map((p) => [p.code, p]));
+    // Use cached products - call getAll() which handles caching
+    const allProducts = await this.getAll();
+    const siigoMap = new Map(allProducts.map((p) => [p.code, p]));
 
     const variants = group.variants.map((variant) => {
-      const siigo = siigoMap.get(variant.siigoCode);
-      const price = siigo ? extractPrice(siigo) : 0;
-      const available_quantity = siigo?.available_quantity ?? 0;
+      const product = siigoMap.get(variant.siigoCode);
+      const price = product?.price ?? 0;
+      const available_quantity = product?.available_quantity ?? 0;
       return {
         siigoCode: variant.siigoCode,
         colorLabel: variant.colorLabel,
@@ -167,11 +168,11 @@ export class CatalogService {
         available_quantity,
         inStock: available_quantity > 0,
         images: variant.images,
-        description: siigo?.description ?? '',
-        brand: siigo?.additional_fields?.brand ?? '',
-        model: siigo?.additional_fields?.model ?? '',
-        taxes: siigo?.taxes ?? [],
-        warehouses: siigo?.warehouses ?? [],
+        description: product?.description ?? '',
+        brand: product?.brand ?? '',
+        model: product?.model ?? '',
+        taxes: product?.taxes ?? [],
+        warehouses: product?.warehouses ?? [],
       };
     });
 
@@ -197,14 +198,15 @@ export class CatalogService {
       include: { variants: true },
     });
 
-    const siigoProducts = await siigoProvider.getAllProducts();
-    const siigoMap = new Map(siigoProducts.map((p) => [p.code, p]));
+    // Use cached products - call getAll() which handles caching
+    const allProducts = await this.getAll();
+    const siigoMap = new Map(allProducts.map((p) => [p.code, p]));
 
     return groups.map((group) => {
       const variants = group.variants.map((variant) => {
-        const siigo = siigoMap.get(variant.siigoCode);
-        const price = siigo ? extractPrice(siigo) : 0;
-        const available_quantity = siigo?.available_quantity ?? 0;
+        const product = siigoMap.get(variant.siigoCode);
+        const price = product?.price ?? 0;
+        const available_quantity = product?.available_quantity ?? 0;
         return {
           siigoCode: variant.siigoCode,
           colorLabel: variant.colorLabel,
