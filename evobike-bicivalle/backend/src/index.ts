@@ -11,6 +11,8 @@ const app = express();
 
 const allowedOrigins = [
   env.FRONTEND_URL,
+  'https://movilibre.co',
+  'https://www.movilibre.co',
   'http://localhost:3000',
   'http://localhost:5173',
 ]
