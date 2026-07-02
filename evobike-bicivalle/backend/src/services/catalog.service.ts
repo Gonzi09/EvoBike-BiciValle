@@ -14,7 +14,7 @@ const extractPrice = (product: SiigoProduct): number => {
 
 const normalize = (value: string | undefined): string => value?.trim().toLowerCase() ?? '';
 
-const CATALOG_CACHE_TTL_MS = 300000;
+const CATALOG_CACHE_TTL_MS = 3600000; // 1 hour
 
 interface CatalogCacheEntry {
   products: UnifiedProduct[];
@@ -22,6 +22,7 @@ interface CatalogCacheEntry {
 }
 
 let catalogCache: CatalogCacheEntry | null = null;
+let cacheWarmingPromise: Promise<void> | null = null;
 
 export class CatalogService {
   private mapProduct(product: SiigoProduct, images: string[], category: string | null = null): UnifiedProduct {
@@ -83,6 +84,13 @@ export class CatalogService {
       return this.applyFilters(catalogCache.products, filters);
     }
 
+    if (cacheWarmingPromise) {
+      await cacheWarmingPromise;
+      if (catalogCache) {
+        return this.applyFilters(catalogCache.products, filters);
+      }
+    }
+
     const [siigoProducts, imageRecords, categoryRecords] = await Promise.all([
       siigoProvider.getAllProducts(),
       prisma.productImage.findMany(),
@@ -138,12 +146,20 @@ export class CatalogService {
   }
 
   async warmCache(): Promise<void> {
-    try {
-      await this.getAll();
-      console.log('Catalog cache warmed successfully');
-    } catch (error) {
-      console.error('Failed to warm catalog cache:', error);
-    }
+    if (cacheWarmingPromise) return cacheWarmingPromise;
+
+    cacheWarmingPromise = this.getAll()
+      .then(() => {
+        console.log('Catalog cache warmed successfully');
+      })
+      .catch((error) => {
+        console.error('Failed to warm catalog cache:', error);
+      })
+      .finally(() => {
+        cacheWarmingPromise = null;
+      });
+
+    return cacheWarmingPromise;
   }
 
   async getGroupBySlug(slug: string): Promise<any | null> {
