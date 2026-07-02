@@ -5,7 +5,6 @@ import authRoutes from './routes/auth.routes.js';
 import checkoutRoutes from './routes/checkout.routes.js';
 import adminRoutes from './routes/admin.routes.js';
 import productRoutes from './routes/products.routes.js';
-import { catalogService } from './services/catalog.service.js';
 
 const app = express();
 
@@ -46,7 +45,4 @@ app.use('/api/admin', adminRoutes);
 
 app.listen(env.PORT, () => {
   console.log(`Server running on http://localhost:${env.PORT}`);
-  setTimeout(() => {
-    catalogService.warmCache();
-  }, 5000);
 });
