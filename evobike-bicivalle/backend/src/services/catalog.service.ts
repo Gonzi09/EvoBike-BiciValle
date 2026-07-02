@@ -77,6 +77,37 @@ export class CatalogService {
     });
   }
 
+  private startCacheWarm(): Promise<void> {
+    if (!cacheWarmingPromise) {
+      cacheWarmingPromise = (async () => {
+        const [siigoProducts, imageRecords, categoryRecords] = await Promise.all([
+          siigoProvider.getAllProducts(),
+          prisma.productImage.findMany(),
+          prisma.productCategory.findMany(),
+        ]);
+
+        const imageMap = new Map(imageRecords.map((record) => [record.siigoCode, record.images]));
+        const categoryMap = new Map(categoryRecords.map((record) => [record.siigoCode, record.category]));
+        const products = siigoProducts
+          .filter((product) => product.active)
+          .map((product) => this.mapProduct(
+            product,
+            imageMap.get(product.code) ?? [],
+            categoryMap.get(product.code) ?? null,
+          ));
+
+        catalogCache = {
+          products,
+          cachedAt: Date.now(),
+        };
+      })().finally(() => {
+        cacheWarmingPromise = null;
+      });
+    }
+
+    return cacheWarmingPromise;
+  }
+
   async getAll(filters: CatalogFilters = {}): Promise<UnifiedProduct[]> {
     const now = Date.now();
 
@@ -84,35 +115,8 @@ export class CatalogService {
       return this.applyFilters(catalogCache.products, filters);
     }
 
-    if (cacheWarmingPromise) {
-      await cacheWarmingPromise;
-      if (catalogCache) {
-        return this.applyFilters(catalogCache.products, filters);
-      }
-    }
-
-    const [siigoProducts, imageRecords, categoryRecords] = await Promise.all([
-      siigoProvider.getAllProducts(),
-      prisma.productImage.findMany(),
-      prisma.productCategory.findMany(),
-    ]);
-
-    const imageMap = new Map(imageRecords.map((record) => [record.siigoCode, record.images]));
-    const categoryMap = new Map(categoryRecords.map((record) => [record.siigoCode, record.category]));
-    const products = siigoProducts
-      .filter((product) => product.active)
-      .map((product) => this.mapProduct(
-        product,
-        imageMap.get(product.code) ?? [],
-        categoryMap.get(product.code) ?? null,
-      ));
-
-    catalogCache = {
-      products,
-      cachedAt: now,
-    };
-
-    return this.applyFilters(products, filters);
+    await this.startCacheWarm();
+    return this.applyFilters(catalogCache!.products, filters);
   }
 
   async getByCode(code: string): Promise<UnifiedProduct | null> {
@@ -146,20 +150,12 @@ export class CatalogService {
   }
 
   async warmCache(): Promise<void> {
-    if (cacheWarmingPromise) return cacheWarmingPromise;
-
-    cacheWarmingPromise = this.getAll()
-      .then(() => {
-        console.log('Catalog cache warmed successfully');
-      })
-      .catch((error) => {
-        console.error('Failed to warm catalog cache:', error);
-      })
-      .finally(() => {
-        cacheWarmingPromise = null;
-      });
-
-    return cacheWarmingPromise;
+    try {
+      await this.startCacheWarm();
+      console.log('Catalog cache warmed successfully');
+    } catch (error) {
+      console.error('Failed to warm catalog cache:', error);
+    }
   }
 
   async getGroupBySlug(slug: string): Promise<any | null> {
@@ -169,7 +165,6 @@ export class CatalogService {
     });
     if (!group) return null;
 
-    // Use cached products - call getAll() which handles caching
     const allProducts = await this.getAll();
     const siigoMap = new Map(allProducts.map((p) => [p.code, p]));
 
@@ -214,7 +209,6 @@ export class CatalogService {
       include: { variants: true },
     });
 
-    // Use cached products - call getAll() which handles caching
     const allProducts = await this.getAll();
     const siigoMap = new Map(allProducts.map((p) => [p.code, p]));
 
