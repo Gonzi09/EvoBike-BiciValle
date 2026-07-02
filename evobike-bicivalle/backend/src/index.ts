@@ -46,5 +46,7 @@ app.use('/api/admin', adminRoutes);
 
 app.listen(env.PORT, () => {
   console.log(`Server running on http://localhost:${env.PORT}`);
-  catalogService.warmCache();
+  setTimeout(() => {
+    catalogService.warmCache();
+  }, 5000);
 });

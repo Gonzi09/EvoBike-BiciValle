@@ -94,8 +94,8 @@ export class SiigoProvider {
   }
 
   private async request<T>(method: string, path: string, body?: unknown): Promise<T> {
-    const maxRetries = 3;
-    const delays = [1000, 2000, 4000];
+    const maxRetries = 5;
+    const delays = [2000, 5000, 10000];
 
     for (let attempt = 0; attempt <= maxRetries; attempt++) {
       const token = await this.getToken();
