@@ -26,8 +26,13 @@ import TiendaBicicletasCali from './pages/TiendaBicicletasCali';
 import ComprarBicicletaCali from './pages/ComprarBicicletaCali';
 import ComoElegirBicicletaElectrica from './pages/ComoElegirBicicletaElectrica';
 import CuantoDuraBateriaBicicletaElectrica from './pages/CuantoDuraBateriaBicicletaElectrica';
+import Maintenance from './pages/Maintenance';
 
 function App() {
+  if (import.meta.env.VITE_MAINTENANCE_MODE === 'true') {
+    return <Maintenance />;
+  }
+
   return (
     <AuthProvider>
       <CartProvider>
